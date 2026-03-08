@@ -608,8 +608,13 @@ strong { color: var(--text); }
   transition: background 0.2s ease;
 }
 
-#availabilityCalendar .fc-daygrid-day:hover {
+#availabilityCalendar .fc-daygrid-day-number {
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
+#availabilityCalendar .fc-daygrid-day-frame:hover {
   background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
 }
 
 #availabilityCalendar .fc-daygrid-day:hover .fc-daygrid-day-number {
