@@ -309,7 +309,7 @@ strong { color: var(--text); }
   box-shadow: 0 0 0 4px rgba(180, 138, 87, 0.12);
   background: #fff;
 }
-.booking-form textarea { resize: vertical; min-height: 140px; }
+.booking-form textarea { resize: vertical; min-height: 120px; }
 .contact-info p { margin-bottom: 8px; }
 
 .lightbox {
@@ -485,4 +485,150 @@ strong { color: var(--text); }
   .whatsapp-box { padding: 28px 24px; }
   .whatsapp-float { right: 14px; bottom: 20px; padding: 11px 14px; }
   .whatsapp-float span { font-size: 13px; }
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.availability-card,
+.booking-form {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.availability-card {
+  align-self: start;
+}
+
+#availabilityCalendar {
+  margin-top: 6px;
+}
+
+#availabilityCalendar .fc {
+  font-family: inherit;
+  font-size: 0.86rem;
+}
+
+#availabilityCalendar .fc-header-toolbar {
+  margin-bottom: 8px !important;
+  gap: 6px;
+}
+
+#availabilityCalendar .fc-toolbar-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.15px;
+}
+
+#availabilityCalendar .fc-button {
+  border-radius: 999px !important;
+  padding: 4px 10px !important;
+  font-size: 0.76rem !important;
+  font-weight: 600 !important;
+  min-height: auto !important;
+  line-height: 1.2 !important;
+  box-shadow: none !important;
+}
+
+#availabilityCalendar .fc-button:focus {
+  box-shadow: none !important;
+}
+
+#availabilityCalendar .fc-scrollgrid {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+#availabilityCalendar .fc-theme-standard td,
+#availabilityCalendar .fc-theme-standard th {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+#availabilityCalendar .fc-col-header-cell {
+  padding: 4px 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+#availabilityCalendar .fc-col-header-cell-cushion {
+  padding: 4px 2px !important;
+}
+
+#availabilityCalendar .fc-daygrid-day-frame {
+  min-height: 50px;
+  max-height: 50px;
+  padding: 4px;
+}
+
+#availabilityCalendar .fc-daygrid-day-top {
+  justify-content: center;
+}
+
+#availabilityCalendar .fc-daygrid-day-number {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 2px 3px;
+  text-decoration: none;
+}
+
+#availabilityCalendar .fc-day-today {
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+#availabilityCalendar .fc-bg-event {
+  opacity: 0.38;
+  border-radius: 6px;
+  margin: 1px;
+}
+
+#availabilityCalendar .fc-daygrid-day {
+  transition: background 0.2s ease;
+}
+
+#availabilityCalendar .fc-daygrid-day:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.calendar-note,
+.form-note {
+  margin-top: 10px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  opacity: 0.82;
+}
+
+@media (max-width: 991px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .availability-card,
+  .booking-form {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  #availabilityCalendar .fc-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  #availabilityCalendar .fc-toolbar-title {
+    font-size: 0.9rem;
+  }
+
 }

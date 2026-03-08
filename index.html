@@ -26,6 +26,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.8/index.global.min.js"></script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -518,37 +525,46 @@
 
     <section id="contact" class="section contact-section alt-bg">
       <div class="container contact-grid">
-        <div>
-          <p class="section-tag">Contact</p>
-          <h2>Request availability</h2>
-          <div class="contact-info">
-            <p><strong>Property:</strong> Olga’s Luxury Villa</p>
-            <p><strong>Email:</strong> olgasluxuryvilla.corfu@gmail.com</p>
-            <p><strong>Phone:</strong> +30 698 880 3182</p>
-            <p><strong>Location:</strong> Corfu, Greece</p>
-          </div>
+        
+        <div class="availability-card">
+          <p class="section-tag">Availability</p>
+          <h2>Check availability</h2>
+          <div id="availabilityCalendar"></div>
+          <p class="calendar-note">Check your preferred dates, then send your request using the form.</p>
         </div>
+
         <form class="booking-form" id="bookingForm" action="https://formspree.io/f/mzdjznkn" method="POST">
           <input type="hidden" name="_subject" value="New Villa Booking Request">
           <input type="hidden" name="_template" value="table">
-            <div style="position:absolute; left:-5000px;" aria-hidden="true">
-              <label for="website">Website</label>
-              <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
-            </div>
-          <div class="form-row">
-            <input type="text" name="name" autocomplete="name" placeholder="Name" required />
-            <input type="email" name="email" autocomplete="email" placeholder="Email Address" required />
+
+          <div style="position:absolute; left:-5000px;" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
           </div>
+
+          <p class="section-tag">Booking Request</p>
+          <h2>Request availability</h2>
+
           <div class="form-row">
-            <input type="date" name="check_in" required />
-            <input type="date" name="check_out" required />
+            <input type="text" name="name" autocomplete="name" placeholder="Name" required>
+            <input type="email" name="email" autocomplete="email" placeholder="Email Address" required>
           </div>
+
           <div class="form-row">
-            <input type="number" name="guests" min="1" placeholder="Guests" required />
-            <input type="tel" name="phone" autocomplete="tel" placeholder="Phone Number" />
+            <input type="date" name="check_in" required>
+            <input type="date" name="check_out" required>
           </div>
-          <textarea name="trip_details" rows="5" placeholder="Tell us about your trip"></textarea>
+
+          <div class="form-row">
+            <input type="number" name="guests" min="1" placeholder="Guests" required>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="Phone Number">
+          </div>
+
+          <textarea name="trip_details" rows="2" placeholder="Tell us about your trip"></textarea>
+
           <button type="submit" class="btn" id="bookingSubmitButton">Send Request</button>
+
+          <p class="form-note">We usually reply within 12 hours.</p>
 
           <p id="formMessage" aria-live="polite" style="display:none; margin-top:15px; color:#1f7742; font-weight:600;">
             Thank you! Your request has been sent successfully. We will contact you soon.
