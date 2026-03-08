@@ -81,7 +81,7 @@
         <a href="#amenities">Amenities</a>
         <a href="#gallery">Gallery</a>
         <a href="#map">Map</a>
-        <a href="#contact" class="btn btn-sm">Book Your Stay</a>
+        <a href="#contact" class="btn btn-sm" data-track="booking_path" data-platform="direct" data-track-location="header-nav">Book Your Stay</a>
       </nav>
     </div>
   </header>
@@ -99,8 +99,8 @@
           spacious balconies surrounded by the beauty of the island.
           </p>
           <div class="hero-actions">
-            <a href="#contact" class="btn">Request Availability</a>
-            <a href="#map" class="btn btn-outline">View Location</a>
+            <a href="#contact" class="btn" id="heroRequestAvailability" data-track="contact_cta" data-track-location="hero">Request Availability</a>
+            <a href="#map" class="btn btn-outline" id="heroViewLocation" data-track="map_cta" data-track-location="hero">View Location</a>
           </div>
           <div class="hero-badges">
             <span>6 Guests</span>
@@ -427,13 +427,21 @@
 
     <a class="btn btn-light"
     href="https://www.airbnb.com/rooms/1363896998863141212/reviews?source_impression_id=p3_1772910483_P3HJDp4j5VX2snHW"
-    target="_blank">
+    target="_blank"
+    rel="noopener noreferrer"
+    data-track="review_click"
+    data-platform="airbnb"
+    data-track-location="reviews">
     View Airbnb Reviews
     </a>
 
     <a class="btn"
     href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html"
-    target="_blank">
+    target="_blank"
+    rel="noopener noreferrer"
+    data-track="review_click"
+    data-platform="booking"
+    data-track-location="reviews">
     View Booking Reviews
     </a>
 
@@ -452,7 +460,7 @@
             <div><strong>Airport transfer:</strong> 15 minutes</div>
           </div>
           <div class="platform-links">
-            <a class="btn" href="https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99" target="_blank" rel="noopener noreferrer">Open Map</a>
+            <a class="btn" href="https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99" target="_blank" rel="noopener noreferrer" id="openMapButton" data-track="map_open" data-track-location="map-section">Open Map</a>
           </div>
         </div>
         <div class="map-card">
@@ -468,9 +476,9 @@
           <h2>Direct, Airbnb, or Booking.com</h2>
         </div>
         <div class="platform-links">
-          <a class="btn" href="#contact">Direct Booking</a>
-          <a class="btn btn-light" href="http://airbnb.com/h/corfu-luxury-villa" target="_blank" rel="noopener noreferrer">Airbnb</a>
-          <a class="btn btn-light" href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html" target="_blank" rel="noopener noreferrer">Booking.com</a>
+          <a class="btn" href="#contact" data-track="booking_path" data-platform="direct" data-track-location="platform-banner">Direct Booking</a>
+          <a class="btn btn-light" href="https://airbnb.com/h/corfu-luxury-villa" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="airbnb" data-track-location="platform-banner">Airbnb</a>
+          <a class="btn btn-light" href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="booking" data-track-location="platform-banner">Booking.com</a>
         </div>
       </div>
     </section>
@@ -488,7 +496,9 @@
           <a class="btn whatsapp-btn"
           href="https://wa.me/306988803182"
           target="_blank"
-          rel="noopener noreferrer">
+          rel="noopener noreferrer"
+          data-track="whatsapp_click"
+          data-track-location="whatsapp-section">
           Message on WhatsApp
           </a>
         </div>
@@ -508,21 +518,21 @@
             <p><strong>Location:</strong> Corfu, Greece</p>
           </div>
         </div>
-        <form class="booking-form">
+        <form class="booking-form" id="bookingForm">
           <div class="form-row">
-            <input type="text" placeholder="Full Name" required />
-            <input type="email" placeholder="Email Address" required />
+            <input type="text" name="full_name" autocomplete="name" placeholder="Full Name" required />
+            <input type="email" name="email" autocomplete="email" placeholder="Email Address" required />
           </div>
           <div class="form-row">
-            <input type="date" required />
-            <input type="date" required />
+            <input type="date" name="check_in" required />
+            <input type="date" name="check_out" required />
           </div>
           <div class="form-row">
-            <input type="number" min="1" placeholder="Guests" required />
-            <input type="tel" placeholder="Phone Number" />
+            <input type="number" name="guests" min="1" placeholder="Guests" required />
+            <input type="tel" name="phone" autocomplete="tel" placeholder="Phone Number" />
           </div>
-          <textarea rows="5" placeholder="Tell us about your trip"></textarea>
-          <button type="submit" class="btn">Send Request</button>
+          <textarea name="trip_details" rows="5" placeholder="Tell us about your trip"></textarea>
+          <button type="submit" class="btn" id="bookingSubmitButton">Send Request</button>
         </form>
       </div>
     </section>
@@ -553,34 +563,44 @@
       </div>
       <div>
         <h4>Book</h4>
-        <a href="#contact">Direct Booking</a>
-        <a href="http://airbnb.com/h/corfu-luxury-villa" target="_blank" rel="noopener noreferrer">Airbnb</a>
-        <a href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html" target="_blank" rel="noopener noreferrer">Booking.com</a>
+        <a href="#contact" data-track="booking_path" data-platform="direct" data-track-location="footer">Direct Booking</a>
+        <a href="https://airbnb.com/h/corfu-luxury-villa" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="airbnb" data-track-location="footer">Airbnb</a>
+        <a href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="booking" data-track-location="footer">Booking.com</a>
       </div>
     </div>
   </footer>
   <a href="https://wa.me/306988803182"
   class="whatsapp-float"
   target="_blank"
-  aria-label="Chat on WhatsApp">
+  rel="noopener noreferrer"
+  aria-label="Chat on WhatsApp"
+  data-track="whatsapp_click"
+  data-track-location="floating-button">
   <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="28">
   </a>
   <!-- Sticky Booking Bar -->
 <div class="booking-bar">
 
-<a href="#contact" class="booking-btn">
+<a href="#contact" class="booking-btn" data-track="booking_path" data-platform="direct" data-track-location="sticky-bar">
 Check Availability
 </a>
 
 <a href="https://wa.me/306988803182"
 class="booking-btn whatsapp"
-target="_blank">
+target="_blank"
+rel="noopener noreferrer"
+data-track="whatsapp_click"
+data-track-location="sticky-bar">
 WhatsApp
 </a>
 
 <a href="https://airbnb.com/h/corfu-luxury-villa"
 class="booking-btn airbnb"
-target="_blank">
+target="_blank"
+rel="noopener noreferrer"
+data-track="booking_path"
+data-platform="airbnb"
+data-track-location="sticky-bar">
 Airbnb
 </a>
 
