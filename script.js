@@ -241,12 +241,20 @@ formFields.forEach((field) => {
 });
 
 if (bookingForm) {
-  bookingForm.addEventListener("submit", (event) => {
+  bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const checkIn = bookingForm.querySelector('[name="check_in"]')?.value || "";
     const checkOut = bookingForm.querySelector('[name="check_out"]')?.value || "";
     const guests = bookingForm.querySelector('[name="guests"]')?.value || "";
+
+    const submitBtn = bookingForm.querySelector('button[type="submit"]');
+    const formMessage = document.getElementById("formMessage");
+
+    if (checkIn && checkOut && checkOut <= checkIn) {
+      alert("Check-out date must be after check-in date.");
+      return;
+    }
 
     trackEvent("generate_lead", {
       currency: "EUR",
@@ -257,10 +265,46 @@ if (bookingForm) {
       check_out: checkOut,
       guests: Number(guests) || undefined
     });
-    const formMessage = document.getElementById("formMessage");
 
-    if (formMessage) {
-        formMessage.style.display = "block";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Sending request...";
+    }
+
+    try {
+      const response = await fetch(bookingForm.action, {
+        method: "POST",
+        body: new FormData(bookingForm),
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (response.ok) {
+        bookingForm.reset();
+
+        if (formMessage) {
+          formMessage.style.display = "block";
+        }
+
+        if (submitBtn) {
+          submitBtn.innerText = "Request Sent ✓";
+        }
+
+      } else {
+        alert("Something went wrong. Please try again.");
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = "Send Request";
+        }
+      }
+
+    } catch (error) {
+      alert("Network error. Please try again.");
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Send Request";
+      }
     }
   });
 }

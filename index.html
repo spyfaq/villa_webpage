@@ -528,9 +528,15 @@
             <p><strong>Location:</strong> Corfu, Greece</p>
           </div>
         </div>
-        <form class="booking-form" id="bookingForm">
+        <form class="booking-form" id="bookingForm" action="https://formspree.io/f/mzdjznkn" method="POST">
+          <input type="hidden" name="_subject" value="New Villa Booking Request">
+          <input type="hidden" name="_template" value="table">
+            <div style="position:absolute; left:-5000px;" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
           <div class="form-row">
-            <input type="text" name="full_name" autocomplete="name" placeholder="Full Name" required />
+            <input type="text" name="name" autocomplete="name" placeholder="Name" required />
             <input type="email" name="email" autocomplete="email" placeholder="Email Address" required />
           </div>
           <div class="form-row">
@@ -544,8 +550,8 @@
           <textarea name="trip_details" rows="5" placeholder="Tell us about your trip"></textarea>
           <button type="submit" class="btn" id="bookingSubmitButton">Send Request</button>
 
-          <p id="formMessage" style="display:none; margin-top:15px; color:#1f7742; font-weight:600;">
-          Thank you! Your request has been sent successfully. We will contact you soon.
+          <p id="formMessage" aria-live="polite" style="display:none; margin-top:15px; color:#1f7742; font-weight:600;">
+            Thank you! Your request has been sent successfully. We will contact you soon.
           </p>
         </form>
       </div>
