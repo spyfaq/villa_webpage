@@ -522,7 +522,7 @@ strong { color: var(--text); }
 }
 
 #availabilityCalendar .fc-toolbar-title {
-  font-size: 0.95rem;
+  font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: 0.15px;
 }
@@ -583,7 +583,19 @@ strong { color: var(--text); }
 }
 
 #availabilityCalendar .fc-day-today {
-  background: rgba(0, 0, 0, 0.03) !important;
+  background: transparent !important;
+}
+
+#availabilityCalendar .fc-day-today .fc-daygrid-day-number {
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
 }
 
 #availabilityCalendar .fc-bg-event {
