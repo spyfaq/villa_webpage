@@ -309,7 +309,7 @@ strong { color: var(--text); }
   box-shadow: 0 0 0 4px rgba(180, 138, 87, 0.12);
   background: #fff;
 }
-.booking-form textarea { resize: vertical; min-height: 120px; }
+.booking-form textarea { resize: vertical; min-height: 148px; }
 .contact-info p { margin-bottom: 8px; }
 
 .lightbox {
@@ -566,8 +566,8 @@ strong { color: var(--text); }
 }
 
 #availabilityCalendar .fc-daygrid-day-frame {
-  min-height: 50px;
-  max-height: 50px;
+  min-height: 48px;
+  max-height: 48px;
   padding: 4px;
 }
 
@@ -609,7 +609,15 @@ strong { color: var(--text); }
 }
 
 #availabilityCalendar .fc-daygrid-day:hover {
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+#availabilityCalendar .fc-daygrid-day:hover .fc-daygrid-day-number {
+  transform: scale(1.05);
+}
+
+#availabilityCalendar .fc-daygrid-day-number {
+  transition: transform 0.18s ease, color 0.18s ease;
 }
 
 .calendar-note,
@@ -643,4 +651,43 @@ strong { color: var(--text); }
     font-size: 0.9rem;
   }
 
+}
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  align-items: center;
+  margin-top: 14px;
+  font-size: 0.88rem;
+  opacity: 0.9;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legend-available {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.legend-booked {
+  background: #c0392b;
+  opacity: 0.38;
+}
+
+.legend-today {
+  background: var(--accent);
+  border-radius: 999px;
 }
