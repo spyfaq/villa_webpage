@@ -320,3 +320,27 @@ if (checkInField) {
     checkOutField.min = checkInField.value;
   });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const calendarEl = document.getElementById("availabilityCalendar");
+  if (!calendarEl) return;
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "dayGridMonth",
+    firstDay: 1,
+    height: "auto",
+    fixedWeekCount: false,
+    showNonCurrentDates: false,
+    dayMaxEvents: false,
+    headerToolbar: {
+      left: "prev,next",
+      center: "title",
+      right: ""
+    },
+    events: "/availability.json",
+    eventDisplay: "background",
+    displayEventTime: false
+  });
+
+  calendar.render();
+});

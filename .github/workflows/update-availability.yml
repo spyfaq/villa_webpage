@@ -1,0 +1,44 @@
+name: Update availability calendar
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every hour at minute 17 (UTC)
+    - cron: "17 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build-availability:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate availability.json
+        env:
+          AIRBNB_ICS_URL: ${{ secrets.AIRBNB_ICS_URL }}
+          BOOKING_ICS_URL: ${{ secrets.BOOKING_ICS_URL }}
+          EXTRA_ICS_URLS: ${{ secrets.EXTRA_ICS_URLS }}
+        run: |
+          python script/generate_availability.py
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet availability.json; then
+            echo "No changes to availability.json"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add availability.json
+          git commit -m "Update availability.json"
+          git push
