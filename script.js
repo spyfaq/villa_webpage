@@ -8,6 +8,25 @@ function getSectionId(element) {
   return section ? section.id : "none";
 }
 
+// Track QR-code visits based on UTM parameters
+(function trackQrLanding() {
+  const params = new URLSearchParams(window.location.search);
+  const source = params.get('utm_source');
+  const medium = params.get('utm_medium');
+  const campaign = params.get('utm_campaign');
+
+  if (typeof gtag === 'function' && source === 'qr') {
+    gtag('event', 'qr_visit', {
+      traffic_type: 'qr',
+      qr_source: source,
+      qr_medium: medium || '',
+      qr_campaign: campaign || '',
+      page_location: window.location.href,
+      page_path: window.location.pathname
+    });
+  }
+})();
+
 function sanitizeText(value) {
   return String(value || "")
     .trim()
