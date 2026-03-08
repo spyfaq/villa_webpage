@@ -257,7 +257,22 @@ if (bookingForm) {
       check_out: checkOut,
       guests: Number(guests) || undefined
     });
+    const formMessage = document.getElementById("formMessage");
 
-    alert("Booking request captured. Next step: connect this form to email, WhatsApp, or your booking backend.");
+    if (formMessage) {
+        formMessage.style.display = "block";
+    }
+  });
+}
+
+const checkInField = bookingForm?.querySelector('[name="check_in"]');
+const checkOutField = bookingForm?.querySelector('[name="check_out"]');
+
+if (checkInField) {
+  const today = new Date().toISOString().split("T")[0];
+  checkInField.min = today;
+
+  checkInField.addEventListener("change", () => {
+    checkOutField.min = checkInField.value;
   });
 }
