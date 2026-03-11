@@ -696,3 +696,14 @@ strong { color: var(--text); }
   background: var(--accent);
   border-radius: 999px;
 }
+
+.direct-booking-badge{
+  display:inline-block;
+  margin-top:12px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#385A63;
+  color:white;
+  font-weight:600;
+  font-size:0.95rem;
+}
