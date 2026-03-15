@@ -325,11 +325,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const calendarEl = document.getElementById("availabilityCalendar");
   if (!calendarEl) return;
 
+  const calendarNote = document.querySelector(".calendar-note");
+
+  function showCalendarFallback(message) {
+    if (calendarNote) {
+      calendarNote.textContent = message;
+    }
+  }
+
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     firstDay: 1,
     height: "auto",
-    fixedWeekCount: false,
+    fixedWeekCount: true,
     showNonCurrentDates: false,
     dayMaxEvents: false,
     headerToolbar: {
@@ -337,10 +345,49 @@ document.addEventListener("DOMContentLoaded", function () {
       center: "title",
       right: ""
     },
-    events: "/availability.json",
     eventDisplay: "background",
-    displayEventTime: false
+    displayEventTime: false,
+
+    events: async function(fetchInfo, successCallback, failureCallback) {
+      try {
+        const response = await fetch(`/availability.json?v=${Date.now()}`, {
+          cache: "no-store"
+        });
+
+        if (!response.ok) {
+          throw new Error("Calendar feed failed");
+        }
+
+        const events = await response.json();
+        successCallback(events);
+
+        showCalendarFallback(
+          "Browse the calendar for a quick view of potential stay dates."
+        );
+      } catch (error) {
+        console.error("Calendar load error:", error);
+        successCallback([]);
+        showCalendarFallback(
+          "Calendar temporarily unavailable. Please send your dates using the enquiry form below."
+        );
+        failureCallback(error);
+      }
+    }
   });
 
   calendar.render();
+
+  window.addEventListener("focus", () => {
+    calendar.refetchEvents();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      calendar.refetchEvents();
+    }
+  });
+
+  setInterval(() => {
+    calendar.refetchEvents();
+  }, 300000);
 });

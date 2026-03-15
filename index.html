@@ -7,10 +7,17 @@
   <title>Luxury Villa Corfu with Infinity Pool | Olga’s Luxury Villa</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/favicon.png">
-  <meta name="description"
-  content="Luxury villa in Corfu with infinity pool, panoramic sea views, BBQ lounge and spacious terraces. Just 6 km from Corfu Town." />
-  <meta name="keywords"
-  content="luxury villa corfu, villa corfu with pool, private villa corfu greece, corfu villa with sea view, villa near corfu town, villa with infinity pool corfu, corfu luxury villa rental">
+  <meta name="description" content="Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town. Direct booking for Olga’s Luxury Villa." />
+  <meta property="og:title" content="Luxury Villa Corfu with Infinity Pool | Olga’s Luxury Villa" />
+  <meta property="og:description" content="Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town." />
+  <meta property="og:image" content="https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" />
+  <meta property="og:url" content="https://olgasluxuryvilla-corfu.com/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Luxury Villa Corfu with Infinity Pool | Olga’s Luxury Villa" />
+  <meta name="twitter:description" content="Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town." />
+  <meta name="twitter:image" content="https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" />
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-702REPNHMK"></script>
   <script>
@@ -36,64 +43,95 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LodgingBusiness",
-    "name": "Olga’s Luxury Villa",
-    "description": "Luxury villa in Corfu with infinity pool, panoramic sea views, BBQ lounge and spacious terraces. Located near Corfu Town.",
-    "url": "https://olgasluxuryvilla-corfu.com",
-    "telephone": "+306988803182",
-    "email": "olgasluxuryvilla.corfu@gmail.com",
-
-    "image": [
-      "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-view.webp",
-      "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-aerial-view.webp",
-      "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-living-room.webp",
-      "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-master-bedroom.webp"
-    ],
-
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Corfu",
-      "addressCountry": "GR"
-    },
-
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "39.6347",
-      "longitude": "19.8673"
-    },
-
-    "hasMap": "https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99",
-
-    "priceRange": "€€€",
-
-    "checkinTime": "15:00",
-    "checkoutTime": "11:00",
-
-    "amenityFeature": [
-      {"@type":"LocationFeatureSpecification","name":"Infinity Pool"},
-      {"@type":"LocationFeatureSpecification","name":"Sea View"},
-      {"@type":"LocationFeatureSpecification","name":"BBQ Area"},
-      {"@type":"LocationFeatureSpecification","name":"Private Parking"},
-      {"@type":"LocationFeatureSpecification","name":"Air Conditioning"},
-      {"@type":"LocationFeatureSpecification","name":"High Speed WiFi"}
-    ],
-
-    "sameAs": [
-      "https://airbnb.com/h/corfu-luxury-villa",
-      "https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html"
+    "@graph": [
+      {
+        "@type": "LodgingBusiness",
+        "@id": "https://olgasluxuryvilla-corfu.com/#business",
+        "name": "Olga’s Luxury Villa",
+        "description": "Luxury private villa in Corfu with infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town.",
+        "url": "https://olgasluxuryvilla-corfu.com/",
+        "telephone": "+306988803182",
+        "email": "olgasluxuryvilla.corfu@gmail.com",
+        "priceRange": "€€€",
+        "currenciesAccepted": "EUR",
+        "checkinTime": "15:00",
+        "checkoutTime": "11:00",
+        "sameAs": [
+          "https://airbnb.com/h/corfu-luxury-villa",
+          "https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html"
+        ],
+        "image": [
+          "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-view.webp",
+          "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-aerial-view.webp",
+          "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-living-room.webp",
+          "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-master-bedroom.webp"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Corfu",
+          "addressRegion": "Ionian Islands",
+          "addressCountry": "GR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 39.6347,
+          "longitude": 19.8673
+        },
+        "hasMap": "https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99",
+        "amenityFeature": [
+          {"@type":"LocationFeatureSpecification","name":"Private Infinity Pool","value": true},
+          {"@type":"LocationFeatureSpecification","name":"Sea View","value": true},
+          {"@type":"LocationFeatureSpecification","name":"BBQ Area","value": true},
+          {"@type":"LocationFeatureSpecification","name":"Private Parking","value": true},
+          {"@type":"LocationFeatureSpecification","name":"Air Conditioning","value": true},
+          {"@type":"LocationFeatureSpecification","name":"High Speed WiFi","value": true}
+        }
+      },
+      {
+        "@type": "VacationRental",
+        "@id": "https://olgasluxuryvilla-corfu.com/#rental",
+        "name": "Olga’s Luxury Villa",
+        "url": "https://olgasluxuryvilla-corfu.com/",
+        "description": "Private holiday villa in Corfu for up to 6 guests with 3 bedrooms, 2.5 bathrooms, infinity pool, panoramic sea views and outdoor dining areas near Corfu Town.",
+        "identifier": "olgas-luxury-villa-corfu",
+        "occupancy": {
+          "@type": "QuantitativeValue",
+          "maxValue": 6
+        },
+        "numberOfBedrooms": 3,
+        "numberOfBathroomsTotal": 2.5,
+        "petsAllowed": false,
+        "containsPlace": [
+          {"@type": "Accommodation", "name": "Bedroom 1"},
+          {"@type": "Accommodation", "name": "Bedroom 2"},
+          {"@type": "Accommodation", "name": "Bedroom 3"}
+        ],
+        "image": [
+          "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp",
+          "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-sea-view-balcony.webp",
+          "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-kitchen-dining-area.webp"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Corfu",
+          "addressRegion": "Ionian Islands",
+          "addressCountry": "GR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 39.6347,
+          "longitude": 19.8673
+        },
+        "amenityFeature": [
+          {"@type":"LocationFeatureSpecification","name":"Infinity Pool","value": true},
+          {"@type":"LocationFeatureSpecification","name":"Sea View Balconies","value": true},
+          {"@type":"LocationFeatureSpecification","name":"Outdoor BBQ Lounge","value": true},
+          {"@type":"LocationFeatureSpecification","name":"Fully Equipped Kitchen","value": true}
+        ]
+      }
     ]
   }
   </script>
-  <meta property="og:title" content="Luxury Villa Corfu with Infinity Pool | Olga’s Luxury Villa" />
-  <meta property="og:description" content="Luxury villa in Corfu with infinity pool, panoramic sea views, BBQ lounge and spacious terraces. Just 6 km from Corfu Town." />
-  <meta property="og:image" content="https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" />
-  <meta property="og:url" content="https://olgasluxuryvilla-corfu.com/" />
-  <meta property="og:type" content="website" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Luxury Villa Corfu with Infinity Pool | Olga’s Luxury Villa" />
-  <meta name="twitter:description" content="Luxury villa in Corfu with infinity pool, panoramic sea views, BBQ lounge and spacious terraces." />
-  <meta name="twitter:image" content="https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" />
 </head>
 <body>
   <header class="site-header">
@@ -104,7 +142,7 @@
         <a href="#about">About</a>
         <a href="#amenities">Amenities</a>
         <a href="#gallery">Gallery</a>
-        <a href="#map">Map</a>
+        <a href="#map">Location</a>
         <a href="#contact" class="btn btn-sm" data-track="booking_path" data-platform="direct" data-track-location="header-nav">Book Your Stay</a>
       </nav>
     </div>
@@ -134,7 +172,10 @@
             <span>Panoramic Sea Views</span>
             <span>Corfu, Greece</span>
           </div>
-
+          <div class="hero-proof">
+            <b>Rated 5★ by guests</b>
+            <span>Highly rated on Airbnb and Booking.com for the views, cleanliness, comfort and host support.</span>
+          </div>
         </div>
         <div class="hero-image-card">
           <img src="images/olgas-luxury-villa-corfu-infinity-pool-hero.webp"
@@ -154,11 +195,10 @@
         <h2>A private Corfu escape designed for unforgettable stays</h2>
 
         <p>
-        Olga’s Luxury Villa is a private luxury villa in Corfu offering panoramic
-        sea views, an infinity swimming pool and spacious outdoor living areas.
-        Located just minutes from Corfu Town, the villa provides the perfect
-        combination of privacy, comfort and Mediterranean charm for families,
-        couples and small groups looking for a relaxing Corfu villa getaway.
+        Olga’s Luxury Villa is a private luxury villa in Corfu offering panoramic sea views, 
+        an infinity swimming pool and spacious outdoor living areas. Located just minutes from Corfu Town, 
+        this holiday villa combines privacy, comfort and Mediterranean charm for families, couples and 
+        small groups looking for a relaxing Corfu villa getaway with direct booking support.
         </p>
 
       </div>
@@ -311,95 +351,8 @@
       </div>
     </section>
 
-    <!-- Nearby Beaches -->
-    <section class="section ">
-    <div class="container">
-    <div class="section-heading">
-    <p class="section-tag">Nearby Beaches</p>
-    <h2>Beautiful beaches near the villa</h2>
-    </div>
-
-    <div class="amenities-grid">
-
-    <article class="card">
-    <h3>Kontokali Beach</h3>
-    <p>Just a few minutes away, this organized beach offers calm waters, beach bars and restaurants.</p>
-    </article>
-
-    <article class="card">
-    <h3>Dassia Beach</h3>
-    <p>A popular beach known for its crystal-clear waters, water sports and vibrant seaside tavernas.</p>
-    </article>
-
-    <article class="card">
-    <h3>Gouvia Beach</h3>
-    <p>A charming beach close to Gouvia Marina with beautiful sunset views and seaside cafés.</p>
-    </article>
-
-    </div>
-    </div>
-    </section>
-
-    <!-- Things To Do -->
-    <section class="section alt-bg">
-    <div class="container">
-    <div class="section-heading">
-    <p class="section-tag">Explore Corfu</p>
-    <h2>Things to do during your stay</h2>
-    </div>
-
-    <div class="amenities-grid">
-
-    <article class="card">
-    <h3>Corfu Old Town</h3>
-    <p>Just 6 km away, explore UNESCO - listed Corfu Town with Venetian architecture, charming alleys and historic landmarks.</p>
-    </article>
-
-    <article class="card">
-    <h3>Gouvia Marina</h3>
-    <p>One of the largest marinas in the Ionian Sea, offering restaurants, cafés and beautiful waterfront views.</p>
-    </article>
-
-    <article class="card">
-    <h3>Boat Trips</h3>
-    <p>Discover the Ionian Sea with private boat tours to nearby islands, hidden beaches and sea caves.</p>
-    </article>
-
-    </div>
-    </div>
-    </section>
-
-    <!-- Why Book Direct -->
-    <section class="section ">
-    <div class="container">
-    <div class="section-heading">
-    <p class="section-tag">Direct Booking</p>
-    <h2>Why book directly with us</h2>
-    </div>
-
-    <div class="amenities-grid">
-
-    <article class="card">
-    <h3>Best Price Guarantee</h3>
-    <p>Direct bookings avoid platform fees from Airbnb and Booking.com.</p>
-    </article>
-
-    <article class="card">
-    <h3>Flexible Communication</h3>
-    <p>Contact us directly via WhatsApp or email for special requests and personalised assistance.</p>
-    </article>
-
-    <article class="card">
-    <h3>Local Recommendations</h3>
-    <p>We provide insider tips for beaches, restaurants and hidden spots across Corfu.</p>
-    </article>
-
-    </div>
-    </div>
-    </section>
-
     <!-- Guest Reviews -->
-    <section class="section alt-bg">
+    <section class="section">
     <div class="container">
 
     <div class="section-heading">
@@ -465,7 +418,7 @@
     </section>
 
     <!-- Location  -->  
-    <section id="map" class="section ">
+    <section id="map" class="section alt-bg">
       <div class="container map-grid">
         <div>
           <p class="section-tag">Map & Location</p>
@@ -486,63 +439,77 @@
     </section>
 
     <!-- Location Highlights -->  
-    <section class="section alt-bg">
+    <section id="explore" class="section">
       <div class="container">
-
         <div class="section-heading">
-          <p class="section-tag">Location Highlights</p>
-          <h2>Conveniently located near Corfu’s top attractions</h2>
-          <p>
-          Olga’s Luxury Villa enjoys a peaceful hilltop location just minutes from
-          Corfu Town, beautiful beaches and the island’s main attractions.
-          </p>
+          <p class="section-tag">Explore Nearby</p>
+          <h2>Best beaches and experiences near our luxury villa in Corfu</h2>
+          <p>Stay close to Corfu’s coastline, historic sights and easy day trips while enjoying a peaceful hilltop base.</p>
         </div>
-
         <div class="amenities-grid">
-
-          <article class="card">
-            <h3>Corfu Old Town</h3>
-            <p>Just 6 km away — explore UNESCO-listed Corfu Old Town with Venetian architecture, historic fortresses and charming alleys.</p>
-            <strong>10 minutes drive</strong>
-          </article>
-
-          <article class="card">
-            <h3>Corfu International Airport</h3>
-            <p>Easy access from the airport makes arriving and departing simple and convenient for guests.</p>
-            <strong>15 minutes drive</strong>
-          </article>
-
           <article class="card">
             <h3>Kontokali Beach</h3>
-            <p>Beautiful organized beach with crystal-clear water, restaurants and beach bars.</p>
-            <strong>5 minutes drive</strong>
+            <p>Organized beach with calm waters, beach bars and restaurants, only a short drive from the villa.</p>
+            <strong>About 5 minutes</strong>
           </article>
-
-          <article class="card">
-            <h3>Gouvia Marina</h3>
-            <p>One of the largest marinas in the Ionian Sea with waterfront restaurants and cafés.</p>
-            <strong>5 minutes drive</strong>
-          </article>
-
           <article class="card">
             <h3>Dassia Beach</h3>
-            <p>Popular beach with water sports, seaside tavernas and beautiful views across the Ionian Sea.</p>
-            <strong>10 minutes drive</strong>
+            <p>Popular beach known for crystal-clear water, water sports and lively seaside tavernas.</p>
+            <strong>About 10 minutes</strong>
+          </article>
+          <article class="card">
+            <h3>Corfu Old Town</h3>
+            <p>Explore UNESCO-listed streets, Venetian architecture and historic landmarks close to your stay.</p>
+            <strong>About 10 minutes</strong>
+          </article>
+          <article class="card">
+            <h3>Gouvia Marina</h3>
+            <p>Waterfront dining, cafés and yacht views make this one of the most convenient nearby spots.</p>
+            <strong>About 5 minutes</strong>
+          </article>
+          <article class="card">
+            <h3>Boat Trips &amp; Sea Caves</h3>
+            <p>Discover the Ionian Sea with private boat tours to nearby islands, hidden beaches and coves.</p>
+            <strong>Easy day experience</strong>
+          </article>
+          <article class="card">
+            <h3>Corfu Airport &amp; Port Access</h3>
+            <p>Simple arrival and departure logistics help guests settle in quickly and explore more easily.</p>
+            <strong>About 10–15 minutes</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- direct-booking -->  
+    <section id="direct-booking" class="section alt-bg">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-tag">Direct Booking Benefits</p>
+          <h2>Why guests choose to book direct</h2>
+          <p>Enjoy direct communication, a smoother enquiry process and the confidence of booking with the host.</p>
+        </div>
+        <div class="amenities-grid">
+          <article class="card">
+            <h3>Best Direct Rate</h3>
+            <p>Book directly with us for the best available direct rate and a more personal booking experience.</p>
           </article>
 
           <article class="card">
-            <h3>Corfu Port</h3>
-            <p>Convenient access for guests arriving by ferry or planning island hopping trips.</p>
-            <strong>10 minutes drive</strong>
+            <h3>Faster Personal Support</h3>
+            <p>Message us directly on WhatsApp or email for quick answers, special requests and stay details.</p>
           </article>
 
+          <article class="card">
+            <h3>Flexible Stay Requests</h3>
+            <p>Need help with arrival times, family stays or local plans? We can guide you before and during your trip.</p>
+          </article>
         </div>
-
       </div>
     </section>
 
     <!-- Book -->  
-    <section class="section">
+    <section class="section ">
       <div class="container platform-banner">
         <div>
           <p class="section-tag">Book Your Preferred Way</p>
@@ -557,7 +524,7 @@
       </div>
     </section>
 
-    <section id="whatsapp" class="section whatsapp-section">
+    <section id="whatsapp" class="section whatsapp-section alt-bg">
       <div class="container">
 
         <div class="whatsapp-box">
@@ -580,12 +547,12 @@
       </div>
     </section>
 
-    <section id="contact" class="section contact-section alt-bg">
+    <section id="contact" class="section contact-section">
       <div class="container contact-grid">
         
         <div class="availability-card">
-          <p class="section-tag">Availability</p>
-          <h2>Check availability</h2>
+          <p class="section-tag">Availability Calendar</p>
+          <h2>Explore possible dates</h2>
           <div id="availabilityCalendar"></div>
           <div class="calendar-legend">
             <span class="legend-item">
@@ -601,7 +568,7 @@
               Today
             </span>
           </div>
-          <p class="calendar-note">Check your preferred dates, then send your request using the form.</p>
+          <p class="calendar-note">Browse the calendar for a quick view of potential stay dates.</p>
         </div>
 
         <form class="booking-form" id="bookingForm" action="https://formspree.io/f/mzdjznkn" method="POST">
@@ -613,9 +580,11 @@
             <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
           </div>
 
-          <p class="section-tag">Booking Request</p>
-          <h2>Request availability</h2>
-
+          <p class="section-tag">Stay Enquiry</p>
+          <h2>Request your preferred stay</h2>
+          <p class="form-note">
+            No payment is required to enquire. We confirm availability personally and usually reply within 12 hours.
+          </p>
           <div class="form-row">
             <input type="text" name="name" autocomplete="name" placeholder="Name" required>
             <input type="email" name="email" autocomplete="email" placeholder="Email Address" required>
@@ -634,8 +603,6 @@
           <textarea name="trip_details" rows="2" placeholder="Tell us about your trip"></textarea>
 
           <button type="submit" class="btn" id="bookingSubmitButton">Send Request</button>
-
-          <p class="form-note">We usually reply within 12 hours.</p>
 
           <p id="formMessage" aria-live="polite" style="display:none; margin-top:15px; color:#1f7742; font-weight:600;">
             Thank you! Your request has been sent successfully. We will contact you soon.
@@ -666,7 +633,7 @@
         <h4>Explore</h4>
         <a href="#about">About</a>
         <a href="#gallery">Gallery</a>
-        <a href="#map">Map</a>
+        <a href="#map">Location</a>
       </div>
       <div>
         <h4>Book</h4>
@@ -687,7 +654,11 @@
   <span>WhatsApp</span>
   </a>
 
-</div>
+  <div class="booking-bar">
+    <a href="#contact" class="booking-btn">Request Availability</a>
+    <a href="https://wa.me/306988803182" class="booking-btn whatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

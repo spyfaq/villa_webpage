@@ -171,7 +171,11 @@ strong { color: var(--text); }
   border-radius: 24px;
   filter: brightness(0.95) contrast(1.05);
 }
-
+.hero-proof {
+  margin-top: 18px;
+  display: grid;
+  gap: 4px;
+}
 .split,
 .contact-grid,
 .footer-grid,
@@ -393,12 +397,12 @@ strong { color: var(--text); }
 }
 
 .booking-bar {
+  display: none;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   background: rgba(22, 48, 71, 0.96);
-  display: flex;
   justify-content: center;
   gap: 16px;
   padding: 12px;
@@ -451,7 +455,9 @@ strong { color: var(--text); }
 }
 
 @media (max-width: 900px) {
-  .booking-bar { display: none; }
+  .booking-bar {
+    display: flex;
+  }
 }
 
 @media (max-width: 760px) {
@@ -491,7 +497,7 @@ strong { color: var(--text); }
   display: grid;
   grid-template-columns: 0.82fr 1.18fr;
   gap: 24px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .availability-card,
@@ -501,6 +507,7 @@ strong { color: var(--text); }
   border-radius: 24px;
   padding: 24px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  height: 100%;
 }
 
 .availability-card {
@@ -566,8 +573,8 @@ strong { color: var(--text); }
 }
 
 #availabilityCalendar .fc-daygrid-day-frame {
-  min-height: 48px;
-  max-height: 48px;
+  min-height: 46px;
+  max-height: 46px;
   padding: 4px;
 }
 
