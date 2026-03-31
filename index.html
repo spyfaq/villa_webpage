@@ -38,12 +38,54 @@
   <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.8/index.global.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.8/index.global.min.js"></script>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://olgasluxuryvilla-corfu.com/#website",
+        "url": "https://olgasluxuryvilla-corfu.com/",
+        "name": "Olga’s Luxury Villa",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://olgasluxuryvilla-corfu.com/#webpage",
+        "url": "https://olgasluxuryvilla-corfu.com/",
+        "name": "Luxury Villa Corfu with Infinity Pool | Olga’s Luxury Villa",
+        "isPartOf": {
+          "@id": "https://olgasluxuryvilla-corfu.com/#website"
+        },
+        "about": {
+          "@id": "https://olgasluxuryvilla-corfu.com/#business"
+        },
+        "description": "Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town.",
+        "inLanguage": "en",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://olgasluxuryvilla-corfu.com/#organization",
+        "name": "Olga’s Luxury Villa",
+        "url": "https://olgasluxuryvilla-corfu.com/",
+        "email": "olgasluxuryvilla.corfu@gmail.com",
+        "telephone": "+306988803182",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://olgasluxuryvilla-corfu.com/images/favicon.png"
+        },
+        "sameAs": [
+          "https://airbnb.com/h/corfu-luxury-villa",
+          "https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html"
+        ]
+      },
       {
         "@type": "LodgingBusiness",
         "@id": "https://olgasluxuryvilla-corfu.com/#business",
@@ -79,13 +121,37 @@
         },
         "hasMap": "https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99",
         "amenityFeature": [
-          {"@type":"LocationFeatureSpecification","name":"Private Infinity Pool","value": true},
-          {"@type":"LocationFeatureSpecification","name":"Sea View","value": true},
-          {"@type":"LocationFeatureSpecification","name":"BBQ Area","value": true},
-          {"@type":"LocationFeatureSpecification","name":"Private Parking","value": true},
-          {"@type":"LocationFeatureSpecification","name":"Air Conditioning","value": true},
-          {"@type":"LocationFeatureSpecification","name":"High Speed WiFi","value": true}
-        }
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Private Infinity Pool",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Sea View",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "BBQ Area",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Private Parking",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Air Conditioning",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "High Speed WiFi",
+            "value": true
+          }
+        ]
       },
       {
         "@type": "VacationRental",
@@ -94,18 +160,8 @@
         "url": "https://olgasluxuryvilla-corfu.com/",
         "description": "Private holiday villa in Corfu for up to 6 guests with 3 bedrooms, 2.5 bathrooms, infinity pool, panoramic sea views and outdoor dining areas near Corfu Town.",
         "identifier": "olgas-luxury-villa-corfu",
-        "occupancy": {
-          "@type": "QuantitativeValue",
-          "maxValue": 6
-        },
-        "numberOfBedrooms": 3,
-        "numberOfBathroomsTotal": 2.5,
+        "additionalType": "Villa",
         "petsAllowed": false,
-        "containsPlace": [
-          {"@type": "Accommodation", "name": "Bedroom 1"},
-          {"@type": "Accommodation", "name": "Bedroom 2"},
-          {"@type": "Accommodation", "name": "Bedroom 3"}
-        ],
         "image": [
           "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp",
           "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-sea-view-balcony.webp",
@@ -122,16 +178,89 @@
           "latitude": 39.6347,
           "longitude": 19.8673
         },
-        "amenityFeature": [
-          {"@type":"LocationFeatureSpecification","name":"Infinity Pool","value": true},
-          {"@type":"LocationFeatureSpecification","name":"Sea View Balconies","value": true},
-          {"@type":"LocationFeatureSpecification","name":"Outdoor BBQ Lounge","value": true},
-          {"@type":"LocationFeatureSpecification","name":"Fully Equipped Kitchen","value": true}
+        "containsPlace": {
+          "@type": "Accommodation",
+          "name": "Olga’s Luxury Villa Accommodation",
+          "occupancy": {
+            "@type": "QuantitativeValue",
+            "value": 6
+          },
+          "numberOfBedrooms": 3,
+          "numberOfBathroomsTotal": 3,
+          "amenityFeature": [
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Infinity Pool",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Sea View Balconies",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Outdoor BBQ Lounge",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Fully Equipped Kitchen",
+              "value": true
+            }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://olgasluxuryvilla-corfu.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Where is Olga’s Luxury Villa located?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Olga’s Luxury Villa is located in Corfu, Greece, near Corfu Town, with panoramic views of the Ionian Sea and Gouvia Marina."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How many guests can stay at Olga’s Luxury Villa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Olga’s Luxury Villa can accommodate up to 6 guests."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the villa have a private pool?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, the villa features a private infinity pool with panoramic sea views."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How many bedrooms and bathrooms does the villa have?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The villa offers 3 bedrooms and 2.5 bathrooms."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can guests book directly?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, guests can enquire and book directly with the host through the website."
+            }
+          }
         ]
       }
     ]
   }
   </script>
+
 </head>
 <body>
   <header class="site-header">

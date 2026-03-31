@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://olgasluxuryvilla-corfu.com/sitemap.xml

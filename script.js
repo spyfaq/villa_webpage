@@ -326,11 +326,97 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!calendarEl) return;
 
   const calendarNote = document.querySelector(".calendar-note");
+  const bookingSection = document.getElementById("contact");
+  const checkInField = bookingForm?.querySelector('[name="check_in"]');
+  const checkOutField = bookingForm?.querySelector('[name="check_out"]');
 
-  function showCalendarFallback(message) {
+  let selectedStart = null;
+  let previewEvent = null;
+
+  function showCalendarNote(message) {
     if (calendarNote) {
-      calendarNote.textContent = message;
+      calendarNote.innerHTML  = message;
     }
+  }
+
+  function formatDateForDisplay(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  }
+
+  function scrollToBookingForm() {
+    if (bookingSection) {
+      bookingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function toYmd(date) {
+    return date.toISOString().split("T")[0];
+  }
+
+  function rangesOverlap(startA, endA, startB, endB) {
+    return startA < endB && endA > startB;
+  }
+
+  function selectionHitsBlockedDates(selectionStart, selectionEnd, calendar) {
+    return calendar.getEvents().some((event) => {
+      if (!event.start || !event.end) return false;
+
+      const isPreview =
+        event.classNames?.includes("selected-range-preview") ||
+        event.extendedProps?.isPreview === true;
+
+      if (isPreview) return false;
+
+      return rangesOverlap(selectionStart, selectionEnd, event.start, event.end);
+    });
+  }
+
+  function buildPreviewEvent(startStr, endStr) {
+    return {
+      start: startStr,
+      end: endStr,
+      display: "background",
+      className: "selected-range-preview",
+      extendedProps: {
+        isPreview: true
+      }
+    };
+  }
+  
+  function setPreview(calendar, startStr, endStr) {
+    if (previewEvent) {
+      previewEvent.remove();
+      previewEvent = null;
+    }
+
+    // remove old anchors
+    calendar.getEvents().forEach(e => {
+      if (e.extendedProps?.isAnchor) e.remove();
+    });
+
+    // main range
+    previewEvent = calendar.addEvent(buildPreviewEvent(startStr, endStr));
+
+    // START anchor
+    calendar.addEvent({
+      start: startStr,
+      display: "background",
+      className: "selected-start-anchor",
+      extendedProps: { isAnchor: true }
+    });
+
+    // END anchor
+    calendar.addEvent({
+      start: endStr,
+      display: "background",
+      className: "selected-end-anchor",
+      extendedProps: { isAnchor: true }
+    });
   }
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -348,7 +434,89 @@ document.addEventListener("DOMContentLoaded", function () {
     eventDisplay: "background",
     displayEventTime: false,
 
-    events: async function(fetchInfo, successCallback, failureCallback) {
+    validRange: {
+      start: new Date().toISOString().split("T")[0]
+    },
+
+    dateClick: function (info) {
+      const clickedDate = new Date(`${info.dateStr}T00:00:00`);
+
+      if (!selectedStart) {
+        const nextDay = new Date(clickedDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+
+        if (selectionHitsBlockedDates(clickedDate, nextDay, calendar)) {
+          showCalendarNote("That date is unavailable. Please choose another check-in date.");
+          return;
+        }
+
+        selectedStart = info.dateStr;
+
+        setPreview(calendar, selectedStart, toYmd(nextDay));
+
+        if (checkInField) checkInField.value = selectedStart;
+        if (checkOutField) {
+          checkOutField.value = "";
+          checkOutField.min = selectedStart;
+        }
+
+        showCalendarNote(
+          `Check-in selected: ${formatDateForDisplay(selectedStart)}. Now select your check-out date.`
+        );
+        return;
+      }
+
+      if (info.dateStr <= selectedStart) {
+        selectedStart = info.dateStr;
+
+        const nextDay = new Date(`${selectedStart}T00:00:00`);
+        nextDay.setDate(nextDay.getDate() + 1);
+
+        setPreview(calendar, selectedStart, toYmd(nextDay));
+
+        if (checkInField) checkInField.value = selectedStart;
+        if (checkOutField) {
+          checkOutField.value = "";
+          checkOutField.min = selectedStart;
+        }
+
+        showCalendarNote(
+          `Check-in updated to ${formatDateForDisplay(selectedStart)}. Now select your check-out date.`
+        );
+        return;
+      }
+
+      const rangeStart = new Date(`${selectedStart}T00:00:00`);
+      const rangeEnd = new Date(`${info.dateStr}T00:00:00`);
+
+      if (selectionHitsBlockedDates(rangeStart, rangeEnd, calendar)) {
+        showCalendarNote("That stay includes unavailable dates. Please choose different dates.");
+        return;
+      }
+
+      if (checkInField) checkInField.value = selectedStart;
+      if (checkOutField) {
+        checkOutField.value = info.dateStr;
+        checkOutField.min = selectedStart;
+      }
+
+      setPreview(calendar, selectedStart, info.dateStr);
+
+      trackEvent("calendar_date_selection", {
+        check_in: selectedStart,
+        check_out: info.dateStr,
+        location: "availability_calendar"
+      });
+
+      showCalendarNote(
+        `Selected stay: ${formatDateForDisplay(selectedStart)} to ${formatDateForDisplay(info.dateStr)}. <br>Complete your enquiry using the form.`
+      );
+
+      selectedStart = null;
+      scrollToBookingForm();
+    },
+
+    events: async function (fetchInfo, successCallback, failureCallback) {
       try {
         const response = await fetch(`/availability.json?v=${Date.now()}`, {
           cache: "no-store"
@@ -361,14 +529,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const events = await response.json();
         successCallback(events);
 
-        showCalendarFallback(
-          "Browse the calendar for a quick view of potential stay dates."
-        );
+        if (selectedStart && !checkOutField?.value) {
+          showCalendarNote(
+            `Check-in selected: ${formatDateForDisplay(selectedStart)}. Now select your check-out date.`
+          );
+        } else if (!checkInField?.value || !checkOutField?.value) {
+          showCalendarNote("Select a check-in date, then select a check-out date.");
+        }
       } catch (error) {
         console.error("Calendar load error:", error);
         successCallback([]);
-        showCalendarFallback(
-          "Calendar temporarily unavailable. Please send your dates using the enquiry form below."
+        showCalendarNote(
+          "Calendar temporarily unavailable. Please send your dates using the enquiry form."
         );
         failureCallback(error);
       }

@@ -714,3 +714,55 @@ strong { color: var(--text); }
   font-weight:600;
   font-size:0.95rem;
 }
+
+/* Selected range (soft gold gradient) */
+#availabilityCalendar .selected-range-preview {
+  background: linear-gradient(
+    180deg,
+    rgba(212, 175, 55, 0.28),
+    rgba(212, 175, 55, 0.16)
+  ) !important;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 
+    inset 0 0 0 1px rgba(212, 175, 55, 0.35),
+    0 2px 8px rgba(212, 175, 55, 0.12);
+  background-size: 200% 200%;
+  animation: goldShimmer 3s ease infinite;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Base range */
+#availabilityCalendar .selected-range-preview {
+  background: linear-gradient(
+    180deg,
+    rgba(212, 175, 55, 0.28),
+    rgba(212, 175, 55, 0.16)
+  ) !important;
+  border-radius: 8px;
+}
+
+/* TRUE start date */
+#availabilityCalendar .selected-start-anchor {
+  background: linear-gradient(
+    180deg,
+    rgba(212, 175, 55, 0.9),
+    rgba(184, 134, 11, 0.8)
+  ) !important;
+  border-radius: 10px;
+}
+
+/* TRUE end date */
+#availabilityCalendar .selected-end-anchor {
+  background: linear-gradient(
+    180deg,
+    rgba(212, 175, 55, 0.9),
+    rgba(184, 134, 11, 0.8)
+  ) !important;
+  border-radius: 10px;
+}
