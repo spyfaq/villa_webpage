@@ -823,3 +823,49 @@ strong { color: var(--text); }
   ) !important;
   border-radius: 10px;
 }
+
+/* Prevent mobile date inputs from blowing up the layout */
+.booking-form .form-row > * {
+  min-width: 0;
+}
+
+.booking-form input[type="date"] {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  display: block;
+  appearance: none;
+  -webkit-appearance: none;
+  font-size: 16px; /* prevents iOS zoom quirks */
+  line-height: 1.2;
+  min-height: 52px;
+  overflow: hidden;
+}
+
+/* Make the native date text fit better on iPhone/Safari */
+.booking-form input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+.booking-form input[type="date"]::-webkit-datetime-edit {
+  padding: 0;
+  font-size: 0.95rem;
+}
+
+.booking-form input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+/* Stronger mobile treatment */
+@media (max-width: 640px) {
+  .booking-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .booking-form input[type="date"] {
+    font-size: 16px;
+    padding: 14px 14px;
+  }
+}

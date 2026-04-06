@@ -283,6 +283,12 @@ if (bookingForm) {
       if (response.ok) {
         bookingForm.reset();
 
+        if (checkOutField) {
+          checkOutField.min = checkInField?.min || new Date().toISOString().split("T")[0];
+        }
+
+        document.dispatchEvent(new CustomEvent("booking-form-reset-calendar"));
+
         if (formMessage) {
           formMessage.style.display = "block";
         }
@@ -418,6 +424,83 @@ document.addEventListener("DOMContentLoaded", function () {
       extendedProps: { isAnchor: true }
     });
   }
+  function clearPreview(calendar) {
+    if (previewEvent) {
+      previewEvent.remove();
+      previewEvent = null;
+    }
+
+    calendar.getEvents().forEach((event) => {
+      if (
+        event.extendedProps?.isAnchor ||
+        event.extendedProps?.isPreview === true ||
+        event.classNames?.includes("selected-range-preview")
+      ) {
+        event.remove();
+      }
+    });
+  }
+
+  function syncCalendarFromForm() {
+    if (!checkInField || !checkOutField) return;
+
+    const checkIn = checkInField.value;
+    const checkOut = checkOutField.value;
+
+    if (!checkIn && !checkOut) {
+      selectedStart = null;
+      clearPreview(calendar);
+      showCalendarNote("Select a check-in date, then select a check-out date.");
+      return;
+    }
+
+    if (checkIn && !checkOut) {
+      const nextDay = new Date(`${checkIn}T00:00:00`);
+      nextDay.setDate(nextDay.getDate() + 1);
+
+      selectedStart = checkIn;
+      setPreview(calendar, checkIn, toYmd(nextDay));
+      showCalendarNote(
+        `Check-in selected: ${formatDateForDisplay(checkIn)}. Now select your check-out date.`
+      );
+      return;
+    }
+
+    if (checkIn && checkOut) {
+      if (checkOut <= checkIn) {
+        clearPreview(calendar);
+        showCalendarNote("Check-out date must be after check-in date.");
+        return;
+      }
+
+      const rangeStart = new Date(`${checkIn}T00:00:00`);
+      const rangeEnd = new Date(`${checkOut}T00:00:00`);
+
+      if (selectionHitsBlockedDates(rangeStart, rangeEnd, calendar)) {
+        clearPreview(calendar);
+        showCalendarNote("That stay includes unavailable dates. Please choose different dates.");
+        return;
+      }
+
+      selectedStart = null;
+      calendar.gotoDate(checkIn);
+      setPreview(calendar, checkIn, checkOut);
+      showCalendarNote(
+        `Selected stay: ${formatDateForDisplay(checkIn)} to ${formatDateForDisplay(checkOut)}. <br>Complete your enquiry using the form.`
+      );
+    }
+  }
+
+function revalidateCurrentSelection() {
+  if (!checkInField?.value && !checkOutField?.value) return;
+  syncCalendarFromForm();
+}
+
+document.addEventListener("booking-form-reset-calendar", () => {
+  selectedStart = null;
+  clearPreview(calendar);
+  showCalendarNote("Select a check-in date, then select a check-out date.");
+});
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
@@ -528,6 +611,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const events = await response.json();
         successCallback(events);
+        setTimeout(revalidateCurrentSelection, 100);
 
         if (selectedStart && !checkOutField?.value) {
           showCalendarNote(
@@ -548,18 +632,41 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   calendar.render();
+  syncCalendarFromForm();
+  if (checkInField) {
+    checkInField.addEventListener("change", () => {
+      if (checkOutField && checkOutField.value && checkOutField.value <= checkInField.value) {
+        checkOutField.value = "";
+      }
+
+      if (checkOutField) {
+        checkOutField.min = checkInField.value || "";
+      }
+
+      syncCalendarFromForm();
+    });
+  }
+
+  if (checkOutField) {
+    checkOutField.addEventListener("change", () => {
+      syncCalendarFromForm();
+    });
+  }
 
   window.addEventListener("focus", () => {
     calendar.refetchEvents();
+    setTimeout(revalidateCurrentSelection, 150);
   });
 
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) {
       calendar.refetchEvents();
+      setTimeout(revalidateCurrentSelection, 150);
     }
   });
 
   setInterval(() => {
     calendar.refetchEvents();
+    setTimeout(revalidateCurrentSelection, 150);
   }, 300000);
 });
