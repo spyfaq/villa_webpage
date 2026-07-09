@@ -1,11 +1,5 @@
 [
   {
-    "start": "2026-07-06",
-    "end": "2026-07-07",
-    "display": "background",
-    "color": "#c0392b"
-  },
-  {
     "start": "2026-07-07",
     "end": "2026-07-21",
     "display": "background",
@@ -79,7 +73,7 @@
   },
   {
     "start": "2026-10-01",
-    "end": "2027-07-09",
+    "end": "2027-07-10",
     "display": "background",
     "color": "#c0392b"
   }
