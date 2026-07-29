@@ -30,7 +30,13 @@
     "color": "#c0392b"
   },
   {
-    "start": "2026-08-22",
+    "start": "2026-08-16",
+    "end": "2026-08-21",
+    "display": "background",
+    "color": "#c0392b"
+  },
+  {
+    "start": "2026-08-21",
     "end": "2026-08-23",
     "display": "background",
     "color": "#c0392b"
