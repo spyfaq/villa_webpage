@@ -35,13 +35,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.8/index.global.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.8/index.global.min.js"></script>
+  <!-- FullCalendar v6 injects its own CSS; availability comes from availability.json,
+       so neither ical.js nor the icalendar plugin is needed. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.8/index.global.min.js"></script>
 
   <script type="application/ld+json">
   {
@@ -68,7 +66,7 @@
         "description": "Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town.",
         "inLanguage": "en",
         "datePublished": "2026-01-01",
-        "dateModified": "2026-04-03",
+        "dateModified": "2026-07-30",
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp"
@@ -223,6 +221,8 @@
           },
           "numberOfBedrooms": 3,
           "numberOfBathroomsTotal": 3,
+          "numberOfFullBathrooms": 2,
+          "numberOfPartialBathrooms": 1,
           "amenityFeature": [
             {
               "@type": "LocationFeatureSpecification",
@@ -302,8 +302,8 @@
   <header class="site-header">
     <div class="container nav">
       <a href="#top" class="logo">Olga’s Luxury Villa</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
-      <nav class="nav-menu" id="navMenu">
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <nav class="nav-menu" id="navMenu" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#amenities">Amenities</a>
         <a href="#gallery">Gallery</a>
@@ -347,7 +347,9 @@
           alt="Luxury villa in Corfu with infinity pool and sea view"
           width="1200"
           height="800"
-          loading="eager" />
+          loading="eager"
+          fetchpriority="high"
+          decoding="async" />
         </div>
       </div>
     </section>
@@ -466,7 +468,7 @@
         <div class="gallery-grid">
 
         <!-- HERO / EXTERIOR -->
-        <img src="images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" class="gallery-item gallery-large" alt="Aerial view of Olga’s Luxury Villa in Corfu with private infinity pool and panoramic sea view">
+        <img src="images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" class="gallery-item gallery-large" alt="Aerial view of Olga’s Luxury Villa in Corfu with private infinity pool and panoramic sea view" width="1200" height="800" loading="lazy">
         <img src="images/olgas-luxury-villa-corfu-aerial-view.webp" class="gallery-item extra-photo" alt="Drone aerial view of luxury villa and infinity pool overlooking the Corfu coastline" width="1200" height="800" loading="lazy">
         <img src="images/olgas-luxury-villa-corfu-aerial-sunset-view.webp" class="gallery-item extra-photo" alt="Sunset drone view of Olga’s Luxury Villa with pool and Ionian Sea view in Corfu" width="1200" height="800" loading="lazy">
         <img src="images/olgas-luxury-villa-corfu-entrance.webp" class="gallery-item extra-photo" alt="Entrance of Olga’s Luxury Villa holiday home in Corfu surrounded by greenery" width="1200" height="800" loading="lazy">
@@ -782,19 +784,17 @@
 
           <button type="submit" class="btn" id="bookingSubmitButton">Send Request</button>
 
-          <p id="formMessage" aria-live="polite" style="display:none; margin-top:15px; color:#1f7742; font-weight:600;">
-            Thank you! Your request has been sent successfully. We will contact you soon.
-          </p>
+          <p id="formMessage" class="form-status" role="status" aria-live="polite" hidden></p>
         </form>
       </div>
     </section>
   </main>
 
-<div class="lightbox" id="lightbox" aria-hidden="true">
-<button class="lightbox-close" id="lightboxClose" aria-label="Close gallery">×</button>
-<button class="lightbox-nav prev" id="prevImage" aria-label="Previous image">❮</button>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Villa photo gallery" aria-hidden="true">
+<button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close gallery">×</button>
+<button class="lightbox-nav prev" id="prevImage" type="button" aria-label="Previous image">❮</button>
 <img id="lightboxImage" src="" alt="Expanded gallery image">
-<button class="lightbox-nav next" id="nextImage" aria-label="Next image">❯</button>
+<button class="lightbox-nav next" id="nextImage" type="button" aria-label="Next image">❯</button>
 </div>
 
   <footer class="site-footer">

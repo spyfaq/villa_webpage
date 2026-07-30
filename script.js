@@ -3,6 +3,20 @@ function trackEvent(eventName, params = {}) {
   window.gtag("event", eventName, params);
 }
 
+// Format a Date as YYYY-MM-DD in the visitor's own timezone.
+// toISOString() converts to UTC first, which shifts the date back a day for
+// every visitor east of UTC (Greece included), so it must not be used here.
+function toLocalYmd(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function todayYmd() {
+  return toLocalYmd(new Date());
+}
+
 function getSectionId(element) {
   const section = element.closest("section[id]");
   return section ? section.id : "none";
@@ -40,8 +54,15 @@ const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
 
 if (navToggle && navMenu) {
+  const setNavState = (isOpen) => {
+    navMenu.classList.toggle("show", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  };
+
   navToggle.addEventListener("click", () => {
-    const isOpen = navMenu.classList.toggle("show");
+    const isOpen = !navMenu.classList.contains("show");
+    setNavState(isOpen);
     trackEvent("menu_toggle", {
       menu_id: "primary_navigation",
       menu_state: isOpen ? "open" : "close"
@@ -49,9 +70,21 @@ if (navToggle && navMenu) {
   });
 
   navMenu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navMenu.classList.remove("show");
-    });
+    link.addEventListener("click", () => setNavState(false));
+  });
+
+  // Close on Escape and on clicks outside the menu
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && navMenu.classList.contains("show")) {
+      setNavState(false);
+      navToggle.focus();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!navMenu.classList.contains("show")) return;
+    if (navMenu.contains(event.target) || navToggle.contains(event.target)) return;
+    setNavState(false);
   });
 }
 
@@ -66,14 +99,17 @@ const showAllBtn = document.getElementById("showAllPhotos");
 
 const galleryPhotos = Array.from(document.querySelectorAll(".gallery-item"));
 let currentIndex = 0;
+let lastFocusedBeforeLightbox = null;
 
 function openLightbox(index) {
   currentIndex = index;
+  lastFocusedBeforeLightbox = document.activeElement;
   lightboxImage.src = galleryPhotos[currentIndex].src;
   lightboxImage.alt = galleryPhotos[currentIndex].alt || "Villa photo";
   lightbox.classList.add("show");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
+  if (lightboxClose) lightboxClose.focus();
 
   const imageName = galleryPhotos[currentIndex].getAttribute("src").split("/").pop();
   trackEvent("select_content", {
@@ -102,10 +138,24 @@ function closeLightbox() {
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImage.src = "";
   document.body.style.overflow = "";
+  if (lastFocusedBeforeLightbox instanceof HTMLElement) {
+    lastFocusedBeforeLightbox.focus();
+    lastFocusedBeforeLightbox = null;
+  }
 }
 
+// Gallery thumbnails are plain <img>, so expose them to keyboard and
+// screen-reader users as the buttons they behave like.
 galleryPhotos.forEach((photo, index) => {
+  photo.setAttribute("role", "button");
+  photo.setAttribute("tabindex", "0");
   photo.addEventListener("click", () => openLightbox(index));
+  photo.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openLightbox(index);
+    }
+  });
 });
 
 if (showAllBtn) {
@@ -139,7 +189,7 @@ if (lightbox) {
 }
 
 document.addEventListener("keydown", (event) => {
-  if (!lightbox.classList.contains("show")) return;
+  if (!lightbox || !lightbox.classList.contains("show")) return;
 
   if (event.key === "ArrowRight") showImage(currentIndex + 1);
   if (event.key === "ArrowLeft") showImage(currentIndex - 1);
@@ -226,6 +276,20 @@ trackedClicks.forEach((element) => {
   });
 });
 
+const formStatus = document.getElementById("formMessage");
+
+function setFormStatus(message, type) {
+  if (!formStatus) return;
+  formStatus.textContent = message;
+  formStatus.classList.remove("form-status--success", "form-status--error");
+  if (type) formStatus.classList.add(`form-status--${type}`);
+  formStatus.hidden = !message;
+}
+
+function clearFormStatus() {
+  setFormStatus("", null);
+}
+
 const formFields = bookingForm ? bookingForm.querySelectorAll("input, textarea, select") : [];
 let bookingFormStarted = false;
 
@@ -249,12 +313,13 @@ if (bookingForm) {
     const guests = bookingForm.querySelector('[name="guests"]')?.value || "";
 
     const submitBtn = bookingForm.querySelector('button[type="submit"]');
-    const formMessage = document.getElementById("formMessage");
 
     if (checkIn && checkOut && checkOut <= checkIn) {
-      alert("Check-out date must be after check-in date.");
+      setFormStatus("Check-out date must be after check-in date.", "error");
       return;
     }
+
+    clearFormStatus();
 
     trackEvent("generate_lead", {
       currency: "EUR",
@@ -284,21 +349,25 @@ if (bookingForm) {
         bookingForm.reset();
 
         if (checkOutField) {
-          checkOutField.min = checkInField?.min || new Date().toISOString().split("T")[0];
+          checkOutField.min = checkInField?.min || todayYmd();
         }
 
         document.dispatchEvent(new CustomEvent("booking-form-reset-calendar"));
 
-        if (formMessage) {
-          formMessage.style.display = "block";
-        }
+        setFormStatus(
+          "Thank you! Your request has been sent successfully. We will contact you soon.",
+          "success"
+        );
 
         if (submitBtn) {
           submitBtn.innerText = "Request Sent ✓";
         }
 
       } else {
-        alert("Something went wrong. Please try again.");
+        setFormStatus(
+          "Something went wrong sending your request. Please try again, or message us on WhatsApp.",
+          "error"
+        );
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerText = "Send Request";
@@ -306,7 +375,10 @@ if (bookingForm) {
       }
 
     } catch (error) {
-      alert("Network error. Please try again.");
+      setFormStatus(
+        "Network error — your request was not sent. Please try again, or message us on WhatsApp.",
+        "error"
+      );
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerText = "Send Request";
@@ -319,7 +391,7 @@ const checkInField = bookingForm?.querySelector('[name="check_in"]');
 const checkOutField = bookingForm?.querySelector('[name="check_out"]');
 
 if (checkInField) {
-  const today = new Date().toISOString().split("T")[0];
+  const today = todayYmd();
   checkInField.min = today;
 
   checkInField.addEventListener("change", () => {
@@ -361,7 +433,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function toYmd(date) {
-    return date.toISOString().split("T")[0];
+    return toLocalYmd(date);
   }
 
   function rangesOverlap(startA, endA, startB, endB) {
@@ -518,7 +590,7 @@ document.addEventListener("booking-form-reset-calendar", () => {
     displayEventTime: false,
 
     validRange: {
-      start: new Date().toISOString().split("T")[0]
+      start: todayYmd()
     },
 
     dateClick: function (info) {

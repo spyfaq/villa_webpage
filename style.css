@@ -14,7 +14,12 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Keep anchored sections clear of the sticky header (76px + breathing room) */
+  scroll-padding-top: 96px;
+}
+[id] { scroll-margin-top: 96px; }
 body {
   margin: 0;
   font-family: "Inter", Arial, Helvetica, sans-serif;
@@ -685,16 +690,30 @@ strong { color: var(--text); }
   transform: scale(1.05);
 }
 
-#availabilityCalendar .fc-daygrid-day-number {
-  transition: transform 0.18s ease, color 0.18s ease;
-}
-
 .calendar-note,
 .form-note {
   margin-top: 10px;
   font-size: 0.88rem;
   line-height: 1.5;
   opacity: 0.82;
+}
+
+.form-status {
+  margin-top: 15px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.form-status--success {
+  color: #14562f;
+  background: rgba(31, 119, 66, 0.10);
+  border: 1px solid rgba(31, 119, 66, 0.22);
+}
+.form-status--error {
+  color: #8c2a1f;
+  background: rgba(192, 57, 43, 0.09);
+  border: 1px solid rgba(192, 57, 43, 0.24);
 }
 
 @media (max-width: 991px) {
@@ -794,16 +813,6 @@ strong { color: var(--text); }
   100% { background-position: 0% 50%; }
 }
 
-/* Base range */
-#availabilityCalendar .selected-range-preview {
-  background: linear-gradient(
-    180deg,
-    rgba(212, 175, 55, 0.28),
-    rgba(212, 175, 55, 0.16)
-  ) !important;
-  border-radius: 8px;
-}
-
 /* TRUE start date */
 #availabilityCalendar .selected-start-anchor {
   background: linear-gradient(
@@ -867,5 +876,26 @@ strong { color: var(--text); }
   .booking-form input[type="date"] {
     font-size: 16px;
     padding: 14px 14px;
+  }
+}
+
+/* Visible keyboard focus, including the gallery thumbnails that act as buttons */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.gallery-item:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
