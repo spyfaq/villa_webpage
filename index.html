@@ -20,26 +20,22 @@
   <meta name="twitter:description" content="Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town." />
   <meta name="twitter:image" content="https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-702REPNHMK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <!-- No analytics provider is connected. Google Analytics was removed because
+       its cookies require prior consent under Greek Law 3471/2006 art. 4(5),
+       which this site does not ask for. The event taxonomy is still wired up in
+       script.js behind trackEvent(); connect a cookieless provider there. -->
 
-    gtag('config', 'G-702REPNHMK');
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- FullCalendar v6 injects its own CSS; availability comes from availability.json,
-       so neither ical.js nor the icalendar plugin is needed. -->
-  <script defer src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.8/index.global.min.js"></script>
+  <!-- FullCalendar 6.1.8, served from this origin rather than a CDN so no third
+       party receives visitors' IP addresses. v6 injects its own CSS, and
+       availability comes from availability.json, so neither ical.js nor the
+       icalendar plugin is needed. See vendor/fullcalendar/LICENSE.md. -->
+  <script defer src="vendor/fullcalendar/core.min.js"></script>
+  <script defer src="vendor/fullcalendar/daygrid.min.js"></script>
+  <script defer src="vendor/fullcalendar/interaction.min.js"></script>
 
   <script type="application/ld+json">
   {
@@ -373,10 +369,7 @@
         <a href="#about">About</a>
         <a href="#amenities">Amenities</a>
         <a href="#gallery">Gallery</a>
-        <a href="#reviews">Reviews</a>
         <a href="#map">Location</a>
-        <a href="#explore">Nearby</a>
-        <a href="#direct-booking">Book Direct</a>
         <a href="#contact" class="btn btn-sm" data-track="booking_path" data-platform="direct" data-track-location="header-nav">Book Your Stay</a>
       </nav>
     </div>
@@ -701,8 +694,26 @@
             <a class="btn" href="https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99" target="_blank" rel="noopener noreferrer" id="openMapButton" data-track="map_open" data-track-location="map-section">Open Map</a>
           </div>
         </div>
-        <div class="map-card">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d24581.316538022165!2d19.86736389010467!3d39.63475585918662!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135b5c050218d9a5%3A0xc8d7b60ffae1bb49!2sOlgas%20Luxury%20Villa!5e0!3m2!1sel!2sgr!4v1772906177219!5m2!1sel!2sgr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <!-- The Google Maps embed sets Google cookies as soon as it loads, which
+             would need prior consent. It is therefore loaded only when the
+             visitor asks for it, which keeps the page free of consent-bearing
+             third parties on first load. -->
+        <div class="map-card map-consent" id="mapCard"
+             data-map-src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d24581.316538022165!2d19.86736389010467!3d39.63475585918662!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135b5c050218d9a5%3A0xc8d7b60ffae1bb49!2sOlgas%20Luxury%20Villa!5e0!3m2!1sel!2sgr!4v1772906177219!5m2!1sel!2sgr">
+          <div class="map-placeholder">
+            <h3>Interactive map</h3>
+            <p>
+              Loading the map connects you to Google Maps, which sets its own cookies
+              and receives your IP address. Nothing is sent until you choose to load it.
+            </p>
+            <button type="button" class="btn" id="loadMapButton"
+                    data-track="map_open" data-track-location="map-embed">Load the map</button>
+            <p class="map-placeholder-alt">
+              Or
+              <a href="https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99" target="_blank" rel="noopener noreferrer">open the location in Google Maps</a>
+              in a new tab.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -873,7 +884,12 @@
 
           <button type="submit" class="btn" id="bookingSubmitButton">Send Request</button>
 
-          <p id="formMessage" class="form-status" role="status" aria-live="polite" hidden></p>
+          <p id="formMessage" class="form-status" role="status" aria-live="polite" tabindex="-1" hidden></p>
+
+          <p class="form-privacy">
+            We use your details only to answer this enquiry and arrange your stay.
+            See our <a href="privacy.html">Privacy Policy</a>.
+          </p>
         </form>
       </div>
     </section>
@@ -907,6 +923,7 @@
         <a href="#contact" data-track="booking_path" data-platform="direct" data-track-location="footer">Direct Booking</a>
         <a href="https://airbnb.com/h/corfu-luxury-villa" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="airbnb" data-track-location="footer">Airbnb</a>
         <a href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="booking" data-track-location="footer">Booking.com</a>
+        <a href="privacy.html">Privacy Policy</a>
       </div>
     </div>
   </footer>

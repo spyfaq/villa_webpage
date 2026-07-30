@@ -1,6 +1,22 @@
+// Single funnel for every analytics event on the site.
+//
+// No provider is connected right now: Google Analytics was removed because its
+// cookies need prior consent under Greek Law 3471/2006 art. 4(5), and this site
+// deliberately runs without a consent banner. Every trackEvent call below is
+// therefore a no-op, but the taxonomy is preserved so a cookieless provider can
+// be added in one place. For example, for Plausible:
+//
+//   if (typeof window.plausible === "function") {
+//     window.plausible(eventName, { props: params });
+//   }
+//
+// Anything added here must stay cookieless and must not send personal data:
+// note that generate_lead below deliberately reports only dates and guest
+// count, never the name, email or phone number.
 function trackEvent(eventName, params = {}) {
-  if (typeof window.gtag !== "function") return;
-  window.gtag("event", eventName, params);
+  if (typeof window.plausible === "function") {
+    window.plausible(eventName, { props: params });
+  }
 }
 
 // Format a Date as YYYY-MM-DD in the visitor's own timezone.
@@ -25,20 +41,15 @@ function getSectionId(element) {
 // Track QR-code visits based on UTM parameters
 (function trackQrLanding() {
   const params = new URLSearchParams(window.location.search);
-  const source = params.get('utm_source');
-  const medium = params.get('utm_medium');
-  const campaign = params.get('utm_campaign');
+  if (params.get("utm_source") !== "qr") return;
 
-  if (typeof gtag === 'function' && source === 'qr') {
-    gtag('event', 'qr_visit', {
-      traffic_type: 'qr',
-      qr_source: source,
-      qr_medium: medium || '',
-      qr_campaign: campaign || '',
-      page_location: window.location.href,
-      page_path: window.location.pathname
-    });
-  }
+  trackEvent("qr_visit", {
+    traffic_type: "qr",
+    qr_source: "qr",
+    qr_medium: params.get("utm_medium") || "",
+    qr_campaign: params.get("utm_campaign") || "",
+    page_path: window.location.pathname
+  });
 })();
 
 function sanitizeText(value) {
@@ -202,6 +213,24 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeLightbox();
 });
 
+// Google Maps is embedded only after the visitor asks for it, so that no
+// consent-bearing third party loads on first paint.
+const mapCard = document.getElementById("mapCard");
+const loadMapButton = document.getElementById("loadMapButton");
+
+if (mapCard && loadMapButton) {
+  loadMapButton.addEventListener("click", () => {
+    const iframe = document.createElement("iframe");
+    iframe.src = mapCard.dataset.mapSrc;
+    iframe.title = "Map showing the location of Olga’s Luxury Villa in Corfu";
+    iframe.loading = "lazy";
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = "no-referrer-when-downgrade";
+    mapCard.replaceChildren(iframe);
+    mapCard.classList.add("is-loaded");
+  });
+}
+
 const trackedSections = new Set();
 const sectionsToTrack = document.querySelectorAll("section[id]");
 
@@ -290,6 +319,20 @@ function setFormStatus(message, type) {
   formStatus.classList.remove("form-status--success", "form-status--error");
   if (type) formStatus.classList.add(`form-status--${type}`);
   formStatus.hidden = !message;
+  if (!message) return;
+
+  // Deliberately not a modal. The message appears in place, next to the form
+  // the visitor just filled in, and is only scrolled to if it happens to be
+  // off-screen. On an error, focus moves to it so keyboard and screen-reader
+  // users are taken straight to the problem instead of hunting for it.
+  const box = formStatus.getBoundingClientRect();
+  if (box.top < 96 || box.bottom > window.innerHeight) {
+    formStatus.scrollIntoView({ block: "center" });
+  }
+  if (type === "error") {
+    // preventScroll, or focus() would scroll again and fight the line above
+    formStatus.focus({ preventScroll: true });
+  }
 }
 
 function clearFormStatus() {
