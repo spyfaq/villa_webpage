@@ -275,6 +275,8 @@ strong { color: var(--text); }
 .feature-list { padding-left: 18px; color: var(--muted); }
 .feature-list li + li { margin-top: 10px; }
 .section-heading { text-align: center; max-width: 720px; margin: 0 auto 52px; }
+.section-links { font-size: 0.94rem; margin-top: 10px; }
+.section-links a { color: var(--accent-text); text-decoration: underline; font-weight: 600; }
 .amenities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .amenity-card {
   position: relative;
@@ -529,6 +531,40 @@ body.lightbox-open .whatsapp-float { display: none; }
 }
 
 .legal { max-width: 760px; }
+.breadcrumb {
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.breadcrumb a { color: var(--accent-text); text-decoration: underline; }
+.breadcrumb span { margin: 0 4px; }
+.guide-intro {
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 34px;
+}
+.guide-cta {
+  margin: 48px 0 0;
+  padding: 30px;
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+  border: 1px solid rgba(28, 38, 48, 0.06);
+}
+.guide-cta h2 { margin-top: 0; font-size: 1.5rem; }
+.guide-cta p { margin-bottom: 18px; }
+.guide-related { margin-top: 48px; }
+.guide-related h2 { font-size: 1.5rem; margin-bottom: 14px; }
+.guide-related-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.guide-related-links a {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid rgba(28, 38, 48, 0.1);
+  font-weight: 600;
+  font-size: 0.94rem;
+}
+.guide-related-links a:hover { border-color: var(--accent-text); }
 .legal h1 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
 .legal h2 {
   font-size: 1.5rem;

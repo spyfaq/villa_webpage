@@ -64,4 +64,7 @@ website itself. Source of truth: https://olgasluxuryvilla-corfu.com/
 
 - [Home](https://olgasluxuryvilla-corfu.com/): the villa, gallery, availability calendar and enquiry form
 - [Frequently asked questions](https://olgasluxuryvilla-corfu.com/#faq): practical details for guests
+- [Getting to the villa](https://olgasluxuryvilla-corfu.com/getting-here.html): reaching Kontrakia from Corfu Airport by car, taxi or bus
+- [The area around the villa](https://olgasluxuryvilla-corfu.com/the-area.html): Kontokali, Gouvia Marina, Dassia and Corfu Old Town
+- [Beaches near the villa](https://olgasluxuryvilla-corfu.com/beaches-near-the-villa.html): east and west coast beaches within reach
 - [Privacy policy](https://olgasluxuryvilla-corfu.com/privacy.html): how enquiry data is handled
