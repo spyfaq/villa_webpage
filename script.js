@@ -112,17 +112,22 @@ const galleryPhotos = Array.from(document.querySelectorAll(".gallery-item"));
 let currentIndex = 0;
 let lastFocusedBeforeLightbox = null;
 
-// Grid thumbnails carry a srcset, so .src resolves to whichever candidate the
-// browser picked. The lightbox always wants the large tier from data-full.
+// Each entry in galleryPhotos is the <button> wrapping a thumbnail. The inner
+// <img> carries a srcset, so its .src resolves to whichever candidate the
+// browser picked; the lightbox always wants the large tier from data-full.
 function fullSizeSrc(photo) {
-  return photo.dataset.full || photo.getAttribute("src");
+  return photo.dataset.full || photo.querySelector("img")?.getAttribute("src") || "";
+}
+
+function photoAlt(photo) {
+  return photo.querySelector("img")?.alt || "Villa photo";
 }
 
 function openLightbox(index) {
   currentIndex = index;
   lastFocusedBeforeLightbox = document.activeElement;
   lightboxImage.src = fullSizeSrc(galleryPhotos[currentIndex]);
-  lightboxImage.alt = galleryPhotos[currentIndex].alt || "Villa photo";
+  lightboxImage.alt = photoAlt(galleryPhotos[currentIndex]);
   lightbox.classList.add("show");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -141,7 +146,7 @@ function showImage(index) {
   if (index >= galleryPhotos.length) index = 0;
   currentIndex = index;
   lightboxImage.src = fullSizeSrc(galleryPhotos[currentIndex]);
-  lightboxImage.alt = galleryPhotos[currentIndex].alt || "Villa photo";
+  lightboxImage.alt = photoAlt(galleryPhotos[currentIndex]);
 
   const imageName = fullSizeSrc(galleryPhotos[currentIndex]).split("/").pop();
   trackEvent("gallery_navigation", {
@@ -161,18 +166,8 @@ function closeLightbox() {
   }
 }
 
-// Gallery thumbnails are plain <img>, so expose them to keyboard and
-// screen-reader users as the buttons they behave like.
 galleryPhotos.forEach((photo, index) => {
-  photo.setAttribute("role", "button");
-  photo.setAttribute("tabindex", "0");
   photo.addEventListener("click", () => openLightbox(index));
-  photo.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      openLightbox(index);
-    }
-  });
 });
 
 if (showAllBtn) {
@@ -339,6 +334,20 @@ function clearFormStatus() {
   setFormStatus("", null);
 }
 
+// Cheap bot filter that costs no third-party request: a real person cannot fill
+// five required fields in under a few seconds, so anything faster is scripted.
+// This only catches bots that run our JavaScript; the _gotcha honeypot field is
+// checked by Formspree server-side, and neither stops a bot posting straight to
+// the endpoint. That is the accepted limit of not loading a captcha.
+const MIN_FILL_MS = 3000;
+const formLoadedAt = Date.now();
+
+function looksAutomated() {
+  if (Date.now() - formLoadedAt < MIN_FILL_MS) return true;
+  const honeypot = bookingForm?.querySelector('[name="_gotcha"]');
+  return Boolean(honeypot && honeypot.value);
+}
+
 const formFields = bookingForm ? bookingForm.querySelectorAll("input, textarea, select") : [];
 let bookingFormStarted = false;
 
@@ -365,6 +374,14 @@ if (bookingForm) {
 
     if (checkIn && checkOut && checkOut <= checkIn) {
       setFormStatus("Check-out date must be after check-in date.", "error");
+      return;
+    }
+
+    if (looksAutomated()) {
+      setFormStatus(
+        "That was submitted a little too quickly for us to accept. Please take a moment and send it again.",
+        "error"
+      );
       return;
     }
 
@@ -774,12 +791,18 @@ document.addEventListener("booking-form-reset-calendar", () => {
     });
   }
 
-  // availability.json is regenerated at most a couple of times a day, so
-  // refreshing when the tab becomes visible again is enough. window focus fires
-  // for the same journey back to the page, so visibilitychange alone covers it.
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) return;
+  function refreshAvailability() {
     calendar.refetchEvents();
     setTimeout(revalidateCurrentSelection, 150);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) return;
+    refreshAvailability();
   });
+
+  // visibilitychange alone misses the page being left open and visible, so keep
+  // a slow poll as a backstop. availability.json is regenerated at most a couple
+  // of times a day, so 15 minutes is far more often than it can change.
+  setInterval(refreshAvailability, 900000);
 });

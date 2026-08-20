@@ -276,21 +276,33 @@ strong { color: var(--text); }
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
 }
-.gallery-grid img,
+/* Each thumbnail is a real <button> wrapping its <img>, so it is focusable,
+   announced as a button, and driven by Enter/Space with no scripting. */
+.gallery-item,
 .gallery-placeholder {
   width: 100%;
   min-height: 220px;
   border-radius: 22px;
   box-shadow: 0 14px 34px rgba(10, 20, 30, 0.08);
 }
-.gallery-grid img {
+.gallery-item {
+  display: block;
   height: 220px;
-  object-fit: cover;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: none;
   cursor: pointer;
   transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
   filter: saturate(0.98) contrast(1.02);
 }
-.gallery-grid img:hover {
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gallery-item:hover {
   transform: translateY(-2px) scale(1.015);
   box-shadow: 0 20px 40px rgba(10, 20, 30, 0.12);
   filter: saturate(1.02) contrast(1.03);
@@ -306,7 +318,6 @@ strong { color: var(--text); }
 }
 .gallery-placeholder span { color: var(--navy); font-weight: 700; text-align: center; }
 .gallery-more { text-align: center; margin-top: 34px; }
-.gallery-item { width: 100%; height: 220px; overflow: hidden; border-radius: 22px; }
 .extra-photo { display: none; }
 
 .map-grid { grid-template-columns: 0.95fr 1.05fr; align-items: stretch; }

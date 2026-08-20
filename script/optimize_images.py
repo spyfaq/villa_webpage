@@ -8,11 +8,12 @@ look at a grid of 220px-tall thumbnails.
 This produces two tiers from each source image:
 
     images/thumbs/<name>.webp   800px wide, q85  -> the gallery grid
-    images/<name>.webp         1900px wide, q88  -> the lightbox and hero
+    images/<name>.webp         2200px wide, q84  -> the lightbox and hero
 
 Quality was chosen by measuring PSNR against a lossless downscale and by
 comparing 1:1 crops of the most detail-heavy shot; both tiers are visually
-indistinguishable from the originals at the sizes the site displays.
+indistinguishable from the originals at the sizes the site displays. 2200px is
+the width a 2x display needs for the lightbox, whose CSS caps it at 1100 CSS px.
 
 EXIF is dropped (one original carried GPS coordinates), but any EXIF
 orientation flag is baked into the pixels first so nothing rotates.
@@ -32,7 +33,7 @@ except ImportError:
 IMAGES_DIR = Path("images")
 THUMBS_DIR = IMAGES_DIR / "thumbs"
 
-FULL_WIDTH, FULL_QUALITY = 1900, 88
+FULL_WIDTH, FULL_QUALITY = 2200, 84
 THUMB_WIDTH, THUMB_QUALITY = 800, 85
 
 # Small UI assets keep their own treatment: resized to what they actually
