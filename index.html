@@ -187,6 +187,12 @@
             "priceCurrency": "EUR",
             "unitCode": "DAY",
             "description": "Nightly rate depending on season and duration"
+          },
+          "eligibleDuration": {
+            "@type": "QuantitativeValue",
+            "minValue": 4,
+            "unitCode": "DAY",
+            "description": "Minimum stay of 4 nights"
           }
         },
         "image": [
@@ -238,6 +244,53 @@
               "@type": "LocationFeatureSpecification",
               "name": "Fully Equipped Kitchen",
               "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Washing Machine",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Tumble Dryer",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Dishwasher",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Cot Available",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "High Chair Available",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Free Private Parking",
+              "value": true
+            }
+          ],
+          "bed": [
+            {
+              "@type": "BedDetails",
+              "typeOfBed": "King",
+              "numberOfBeds": 1
+            },
+            {
+              "@type": "BedDetails",
+              "typeOfBed": "Queen",
+              "numberOfBeds": 2
+            },
+            {
+              "@type": "BedDetails",
+              "typeOfBed": "Sofa Bed",
+              "numberOfBeds": 1
             }
           ]
         }
@@ -252,6 +305,30 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "The villa is in Kontrakia, on a hillside about 6 km from Corfu Town, with panoramic views over the Ionian Sea, Gouvia Marina and Corfu Town itself. Corfu Airport is roughly 15 minutes away by car."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How far is Corfu Old Town?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Corfu Old Town, a UNESCO World Heritage site, is about 10 minutes away by car — roughly 6 km from the villa."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How far is the nearest beach?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Kontokali Beach is about 5 minutes away by car, and Dassia Beach — known for clear water and water sports — is about 10 minutes. Gouvia Marina, with its waterfront restaurants and cafés, is also about 5 minutes away."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need a car to stay at the villa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "There is a bus stop about 100 metres from the villa, so getting into Corfu Town without a car is possible. That said, we recommend hiring one. The villa sits on a hillside, and a car makes the beaches, the Old Town and the rest of the island far easier to reach on your own schedule."
             }
           },
           {
@@ -272,6 +349,14 @@
           },
           {
             "@type": "Question",
+            "name": "What are the sleeping arrangements?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The three bedrooms have one king bed and two queen beds. There is also a sofa bed, which gives you some extra flexibility in how your group sleeps."
+            }
+          },
+          {
+            "@type": "Question",
             "name": "Does the villa have a private pool?",
             "acceptedAnswer": {
               "@type": "Answer",
@@ -280,10 +365,26 @@
           },
           {
             "@type": "Question",
-            "name": "What time is check-in and check-out?",
+            "name": "Is the pool heated?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Check-in is from 15:00 and check-out is by 11:00. If you are arriving on a late flight, message us in advance and we will do our best to accommodate you."
+              "text": "No, the pool is not heated."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a kitchen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, the villa has a fully equipped kitchen with an indoor dining area, plus an outdoor BBQ and dining area on the terrace."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a washing machine and a dishwasher?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The villa has a washing machine, a tumble dryer and a dishwasher."
             }
           },
           {
@@ -312,6 +413,14 @@
           },
           {
             "@type": "Question",
+            "name": "Do you have a cot and a high chair for young children?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, both a cot and a high chair are available. Mention it in your enquiry and we will have them ready for your arrival."
+            }
+          },
+          {
+            "@type": "Question",
             "name": "Are pets allowed?",
             "acceptedAnswer": {
               "@type": "Answer",
@@ -320,26 +429,26 @@
           },
           {
             "@type": "Question",
-            "name": "Is there a kitchen?",
+            "name": "Is there a minimum stay?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, the villa has a fully equipped kitchen with an indoor dining area, plus an outdoor BBQ and dining area on the terrace."
+              "text": "Yes, the minimum stay is 4 nights."
             }
           },
           {
             "@type": "Question",
-            "name": "How far is the nearest beach?",
+            "name": "What time is check-in and check-out?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Kontokali Beach is about 5 minutes away by car, and Dassia Beach — known for clear water and water sports — is about 10 minutes. Gouvia Marina, with its waterfront restaurants and cafés, is also about 5 minutes away."
+              "text": "Check-in is from 15:00 and check-out is by 11:00. If you are arriving on a late flight, message us in advance and we will do our best to accommodate you."
             }
           },
           {
             "@type": "Question",
-            "name": "How far is Corfu Old Town?",
+            "name": "What is included in the price?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Corfu Old Town, a UNESCO World Heritage site, is about 10 minutes away by car — roughly 6 km from the villa."
+              "text": "Bed linen, bath towels and pool towels are all provided, and both the final clean and a mid-stay clean are included. The kitchen is fully equipped, Wi-Fi and air conditioning are included throughout, and parking on site is free."
             }
           },
           {
@@ -877,6 +986,18 @@
             <p>The villa is in Kontrakia, on a hillside about 6 km from Corfu Town, with panoramic views over the Ionian Sea, Gouvia Marina and Corfu Town itself. Corfu Airport is roughly 15 minutes away by car.</p>
           </div>
           <div class="faq-item">
+            <h3>How far is Corfu Old Town?</h3>
+            <p>Corfu Old Town, a UNESCO World Heritage site, is about 10 minutes away by car — roughly 6 km from the villa.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How far is the nearest beach?</h3>
+            <p>Kontokali Beach is about 5 minutes away by car, and Dassia Beach — known for clear water and water sports — is about 10 minutes. Gouvia Marina, with its waterfront restaurants and cafés, is also about 5 minutes away.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need a car to stay at the villa?</h3>
+            <p>There is a bus stop about 100 metres from the villa, so getting into Corfu Town without a car is possible. That said, we recommend hiring one. The villa sits on a hillside, and a car makes the beaches, the Old Town and the rest of the island far easier to reach on your own schedule.</p>
+          </div>
+          <div class="faq-item">
             <h3>How many guests can stay at the villa?</h3>
             <p>The villa sleeps up to 6 guests across 3 bedrooms.</p>
           </div>
@@ -885,12 +1006,24 @@
             <p>There are 3 bedrooms and 2.5 bathrooms — two full bathrooms and a ground-floor guest WC.</p>
           </div>
           <div class="faq-item">
+            <h3>What are the sleeping arrangements?</h3>
+            <p>The three bedrooms have one king bed and two queen beds. There is also a sofa bed, which gives you some extra flexibility in how your group sleeps.</p>
+          </div>
+          <div class="faq-item">
             <h3>Does the villa have a private pool?</h3>
             <p>Yes. The villa has its own private infinity pool with panoramic sea views, for the exclusive use of guests staying at the villa. There are sun loungers on the pool terrace.</p>
           </div>
           <div class="faq-item">
-            <h3>What time is check-in and check-out?</h3>
-            <p>Check-in is from 15:00 and check-out is by 11:00. If you are arriving on a late flight, message us in advance and we will do our best to accommodate you.</p>
+            <h3>Is the pool heated?</h3>
+            <p>No, the pool is not heated.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there a kitchen?</h3>
+            <p>Yes, the villa has a fully equipped kitchen with an indoor dining area, plus an outdoor BBQ and dining area on the terrace.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there a washing machine and a dishwasher?</h3>
+            <p>Yes. The villa has a washing machine, a tumble dryer and a dishwasher.</p>
           </div>
           <div class="faq-item">
             <h3>Is there air conditioning?</h3>
@@ -905,20 +1038,24 @@
             <p>Yes, the villa has private parking on site at no extra cost.</p>
           </div>
           <div class="faq-item">
+            <h3>Do you have a cot and a high chair for young children?</h3>
+            <p>Yes, both a cot and a high chair are available. Mention it in your enquiry and we will have them ready for your arrival.</p>
+          </div>
+          <div class="faq-item">
             <h3>Are pets allowed?</h3>
             <p>No, we are not able to accept pets at the villa.</p>
           </div>
           <div class="faq-item">
-            <h3>Is there a kitchen?</h3>
-            <p>Yes, the villa has a fully equipped kitchen with an indoor dining area, plus an outdoor BBQ and dining area on the terrace.</p>
+            <h3>Is there a minimum stay?</h3>
+            <p>Yes, the minimum stay is 4 nights.</p>
           </div>
           <div class="faq-item">
-            <h3>How far is the nearest beach?</h3>
-            <p>Kontokali Beach is about 5 minutes away by car, and Dassia Beach — known for clear water and water sports — is about 10 minutes. Gouvia Marina, with its waterfront restaurants and cafés, is also about 5 minutes away.</p>
+            <h3>What time is check-in and check-out?</h3>
+            <p>Check-in is from 15:00 and check-out is by 11:00. If you are arriving on a late flight, message us in advance and we will do our best to accommodate you.</p>
           </div>
           <div class="faq-item">
-            <h3>How far is Corfu Old Town?</h3>
-            <p>Corfu Old Town, a UNESCO World Heritage site, is about 10 minutes away by car — roughly 6 km from the villa.</p>
+            <h3>What is included in the price?</h3>
+            <p>Bed linen, bath towels and pool towels are all provided, and both the final clean and a mid-stay clean are included. The kitchen is fully equipped, Wi-Fi and air conditioning are included throughout, and parking on site is free.</p>
           </div>
           <div class="faq-item">
             <h3>Can I book directly with the owner?</h3>
