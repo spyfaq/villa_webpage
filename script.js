@@ -107,6 +107,7 @@ const lightboxClose = document.getElementById("lightboxClose");
 const prevBtn = document.getElementById("prevImage");
 const nextBtn = document.getElementById("nextImage");
 const showAllBtn = document.getElementById("showAllPhotos");
+const lightboxCounter = document.getElementById("lightboxCounter");
 
 const galleryPhotos = Array.from(document.querySelectorAll(".gallery-item"));
 let currentIndex = 0;
@@ -123,6 +124,12 @@ function photoAlt(photo) {
   return photo.querySelector("img")?.alt || "Villa photo";
 }
 
+// With 30 photographs there is no sense of position without a counter.
+function updateLightboxCounter() {
+  if (!lightboxCounter) return;
+  lightboxCounter.textContent = `${currentIndex + 1} / ${galleryPhotos.length}`;
+}
+
 function openLightbox(index) {
   currentIndex = index;
   lastFocusedBeforeLightbox = document.activeElement;
@@ -131,6 +138,10 @@ function openLightbox(index) {
   lightbox.classList.add("show");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
+  // The sticky booking bar and WhatsApp float are fixed at a lower stacking
+  // level than the dialog; hide them so nothing foreign floats over the modal.
+  document.body.classList.add("lightbox-open");
+  updateLightboxCounter();
   if (lightboxClose) lightboxClose.focus();
 
   const imageName = fullSizeSrc(galleryPhotos[currentIndex]).split("/").pop();
@@ -147,6 +158,7 @@ function showImage(index) {
   currentIndex = index;
   lightboxImage.src = fullSizeSrc(galleryPhotos[currentIndex]);
   lightboxImage.alt = photoAlt(galleryPhotos[currentIndex]);
+  updateLightboxCounter();
 
   const imageName = fullSizeSrc(galleryPhotos[currentIndex]).split("/").pop();
   trackEvent("gallery_navigation", {
@@ -160,6 +172,7 @@ function closeLightbox() {
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImage.src = "";
   document.body.style.overflow = "";
+  document.body.classList.remove("lightbox-open");
   if (lastFocusedBeforeLightbox instanceof HTMLElement) {
     lastFocusedBeforeLightbox.focus();
     lastFocusedBeforeLightbox = null;
@@ -207,6 +220,30 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") showImage(currentIndex - 1);
   if (event.key === "Escape") closeLightbox();
 });
+
+// Swiping is the expected gesture on a phone gallery.
+if (lightbox) {
+  let touchStartX = null;
+  let touchStartY = null;
+
+  lightbox.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }, { passive: true });
+
+  lightbox.addEventListener("touchend", (event) => {
+    if (touchStartX === null) return;
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    touchStartX = null;
+    touchStartY = null;
+    // Horizontal intent only, so a vertical scroll never flips the photo
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return;
+    showImage(currentIndex + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+}
 
 // Google Maps is embedded only after the visitor asks for it, so that no
 // consent-bearing third party loads on first paint.
@@ -492,10 +529,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Scroll to the form itself, not the section: the section starts at the
+  // calendar, so scrolling there showed the visitor the calendar again right
+  // after telling them to "complete your enquiry using the form".
   function scrollToBookingForm() {
-    if (bookingSection) {
-      bookingSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const target = document.querySelector(".booking-form") || bookingSection;
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    const firstEmpty = Array.from(
+      target.querySelectorAll('input[name="name"], input[name="email"]')
+    ).find((field) => !field.value);
+    if (firstEmpty) firstEmpty.focus({ preventScroll: true });
   }
 
   function toYmd(date) {
@@ -644,7 +688,7 @@ document.addEventListener("booking-form-reset-calendar", () => {
     initialView: "dayGridMonth",
     firstDay: 1,
     height: "auto",
-    fixedWeekCount: true,
+    fixedWeekCount: false,
     showNonCurrentDates: false,
     dayMaxEvents: false,
     headerToolbar: {

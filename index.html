@@ -182,7 +182,7 @@
           "availability": "https://schema.org/InStock",
           "priceSpecification": {
             "@type": "UnitPriceSpecification",
-            "minPrice": 400,
+            "minPrice": 499,
             "maxPrice": 1000,
             "priceCurrency": "EUR",
             "unitCode": "DAY",
@@ -325,6 +325,7 @@
             <a href="#map" class="btn btn-outline" id="heroViewLocation" data-track="map_cta" data-track-location="hero">View Location</a>
           </div>
           <div class="hero-badges">
+            <span class="hero-badge-price">From €499 / night</span>
             <span>6 Guests</span>
             <span>3 Bedrooms</span>
             <span>2.5 Bathrooms</span>
@@ -371,7 +372,7 @@
     <section id="about" class="section alt-bg">
       <div class="container split">
         <div class="image-stack">
-          <img src="images/olgas-luxury-villa-corfu-infinity-pool-view.webp" alt="Olga’s Luxury Villa infinity pool with sunset and sea view" class="stack-main" width="1900" height="1267" loading="lazy" decoding="async" />
+          <img src="images/olgas-luxury-villa-corfu-infinity-pool-view.webp" alt="Olga’s Luxury Villa infinity pool with sunset and sea view" class="stack-main" width="2200" height="1467" loading="lazy" decoding="async" />
           <div class="stack-card">
             <p class="section-tag small-tag">Signature Stay</p>
             <h3>Luxury private villa experience</h3>
@@ -765,7 +766,7 @@
         <div class="amenities-grid">
           <article class="card">
             <h3>Best Direct Rate</h3>
-            <p>Book directly with us for the best available direct rate and a more personal booking experience.</p>
+            <p>Booking direct saves you the platform service fee — typically 15% or more — and gets you a more personal booking experience.</p>
           </article>
 
           <article class="card">
@@ -787,7 +788,7 @@
         <div>
           <p class="section-tag">Book Your Preferred Way</p>
           <h2>Direct, Airbnb, or Booking.com</h2>
-          <p class="direct-booking-badge">Best price when booking direct • No platform fees</p>
+          <p class="direct-booking-badge">Save 15%+ when booking direct • No platform service fees</p>
         </div>
         <div class="platform-links">
           <a class="btn" href="#contact" data-track="booking_path" data-platform="direct" data-track-location="platform-banner">Direct Booking</a>
@@ -826,6 +827,7 @@
         <div class="availability-card">
           <p class="section-tag">Availability Calendar</p>
           <h2>Explore possible dates</h2>
+          <p class="calendar-price">From <strong>€499 / night</strong> — final rate depends on season and length of stay.</p>
           <div id="availabilityCalendar"></div>
           <div class="calendar-legend">
             <span class="legend-item">
@@ -859,21 +861,42 @@
             No payment is required to enquire. We confirm availability personally and usually reply within 12 hours.
           </p>
           <div class="form-row">
-            <input type="text" name="name" autocomplete="name" placeholder="Name" required>
-            <input type="email" name="email" autocomplete="email" placeholder="Email Address" required>
+            <div class="field">
+              <label for="fName">Name</label>
+              <input type="text" id="fName" name="name" autocomplete="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="fEmail">Email address</label>
+              <input type="email" id="fEmail" name="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
           </div>
 
           <div class="form-row form-row-dates">
-            <input type="date" name="check_in" required>
-            <input type="date" name="check_out" required>
+            <div class="field">
+              <label for="fCheckIn">Check-in</label>
+              <input type="date" id="fCheckIn" name="check_in" required>
+            </div>
+            <div class="field">
+              <label for="fCheckOut">Check-out</label>
+              <input type="date" id="fCheckOut" name="check_out" required>
+            </div>
           </div>
 
           <div class="form-row">
-            <input type="number" name="guests" min="1" placeholder="Guests" required>
-            <input type="tel" name="phone" autocomplete="tel" placeholder="Phone Number">
+            <div class="field">
+              <label for="fGuests">Guests <span class="field-optional">(max 6)</span></label>
+              <input type="number" id="fGuests" name="guests" min="1" max="6" placeholder="2" required>
+            </div>
+            <div class="field">
+              <label for="fPhone">Phone <span class="field-optional">(optional)</span></label>
+              <input type="tel" id="fPhone" name="phone" autocomplete="tel" placeholder="+30 …">
+            </div>
           </div>
 
-          <textarea name="trip_details" rows="2" placeholder="Tell us about your trip"></textarea>
+          <div class="field">
+            <label for="fTrip">Tell us about your trip <span class="field-optional">(optional)</span></label>
+            <textarea id="fTrip" name="trip_details" rows="2" placeholder="Anything that helps us prepare for your stay"></textarea>
+          </div>
 
           <button type="submit" class="btn" id="bookingSubmitButton">Send Request</button>
 
@@ -892,6 +915,7 @@
 <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close gallery">×</button>
 <button class="lightbox-nav prev" id="prevImage" type="button" aria-label="Previous image">❮</button>
 <img id="lightboxImage" src="" alt="Expanded gallery image">
+<p class="lightbox-counter" id="lightboxCounter" aria-live="polite"></p>
 <button class="lightbox-nav next" id="nextImage" type="button" aria-label="Next image">❯</button>
 </div>
 
@@ -912,12 +936,22 @@
         <a href="#map">Location</a>
       </div>
       <div>
+        <h4>Contact</h4>
+        <a href="tel:+306988803182">+30 698 880 3182</a>
+        <a href="mailto:olgasluxuryvilla.corfu@gmail.com">olgasluxuryvilla.corfu@gmail.com</a>
+        <p class="footer-address">Kontrakia, Corfu 49100, Greece</p>
+      </div>
+      <div>
         <h4>Book</h4>
         <a href="#contact" data-track="booking_path" data-platform="direct" data-track-location="footer">Direct Booking</a>
         <a href="https://airbnb.com/h/corfu-luxury-villa" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="airbnb" data-track-location="footer">Airbnb</a>
         <a href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="booking" data-track-location="footer">Booking.com</a>
         <a href="privacy.html">Privacy Policy</a>
       </div>
+    </div>
+    <div class="container footer-legal">
+      <p>© 2026 Olga’s Luxury Villa · Corfu, Greece</p>
+      <a href="privacy.html">Privacy Policy</a>
     </div>
   </footer>
   <a href="https://wa.me/306988803182"

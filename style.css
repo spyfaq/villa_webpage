@@ -43,8 +43,11 @@
   --surface: #ffffff;
   --surface-soft: #f1ede5;
   --text: #1c2630;
-  --muted: #66707a;
-  --accent: #b48a57;
+  --muted: #5e6771;           /* 4.92:1 on alt-bg (was #66707a, 4.32:1) */
+  --accent: #b48a57;          /* decorative only: hairlines, fills, gradients */
+  --accent-text: #82603a;     /* 4.88:1 on alt-bg, 5.70:1 on white */
+  --accent-btn: #8a6236;      /* white label 5.41:1 */
+  --accent-btn-dark: #7e5d38; /* white label 5.98:1 */
   --accent-dark: #8f6a40;
   --navy: #163047;
   --border: rgba(28, 38, 48, 0.08);
@@ -97,7 +100,7 @@ strong { color: var(--text); }
   letter-spacing: 0.16em;
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .small-tag { font-size: 0.72rem; }
 
@@ -109,8 +112,8 @@ strong { color: var(--text); }
   min-height: 50px;
   padding: 14px 26px;
   border-radius: 999px;
-  border: 1px solid rgba(180, 138, 87, 0.16);
-  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border: 1px solid rgba(126, 93, 56, 0.24);
+  background: linear-gradient(135deg, var(--accent-btn), var(--accent-btn-dark));
   color: #fff;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -119,19 +122,19 @@ strong { color: var(--text); }
   cursor: pointer;
 }
 .btn:hover {
-  background: linear-gradient(135deg, var(--accent-dark), #7e5d38);
+  background: linear-gradient(135deg, #74522f, #6a4b2b);
   transform: translateY(-2px);
   box-shadow: 0 16px 32px rgba(22, 48, 71, 0.16);
 }
 .btn-outline {
   background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.34);
+  border: 1px solid rgba(255,255,255,0.55);
   color: #fff;
   box-shadow: none;
 }
 .btn-outline:hover {
   background: rgba(255,255,255,0.10);
-  border-color: rgba(255,255,255,0.52);
+  border-color: rgba(255,255,255,0.72);
 }
 .btn-light {
   background: rgba(255,255,255,0.96);
@@ -169,7 +172,17 @@ strong { color: var(--text); }
 }
 .nav-menu { display: flex; align-items: center; gap: 22px; }
 .nav-menu a { font-weight: 600; }
-.nav-toggle { display: none; background: transparent; border: 0; font-size: 1.8rem; cursor: pointer; color: var(--navy); }
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  font-size: 1.8rem;
+  line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--navy);
+}
 
 .hero {
   position: relative;
@@ -194,6 +207,11 @@ strong { color: var(--text); }
 .hero-text { color: rgba(255,255,255,0.86); font-size: 1.08rem; margin-bottom: 28px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
 .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-badge-price {
+  background: rgba(255,255,255,0.16) !important;
+  border-color: rgba(255,255,255,0.34) !important;
+  font-weight: 700;
+}
 .hero-badges span {
   padding: 10px 14px;
   border-radius: 999px;
@@ -225,11 +243,15 @@ strong { color: var(--text); }
 .contact-grid,
 .footer-grid,
 .map-grid { display: grid; gap: 42px; }
-.split { grid-template-columns: 1fr 1fr; align-items: center; }
+.split { grid-template-columns: 1fr 1fr; align-items: start; }
 .image-stack { display: grid; gap: 18px; }
 .stack-main {
   width: 100%;
-  min-height: 500px;
+  /* No height here previously, so the img height attribute applied as a
+     presentational hint and cropped the photo to ~30% of its width. */
+  height: auto;
+  aspect-ratio: 3 / 2;
+  min-height: 0;
   object-fit: cover;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -388,7 +410,7 @@ strong { color: var(--text); }
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 .booking-form input::placeholder,
-.booking-form textarea::placeholder { color: #7d8690; }
+.booking-form textarea::placeholder { color: #6b747e; }
 .booking-form input:focus,
 .booking-form textarea:focus {
   border-color: rgba(180, 138, 87, 0.95);
@@ -396,6 +418,14 @@ strong { color: var(--text); }
   background: #fff;
 }
 .booking-form textarea { resize: vertical; min-height: 148px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field > label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.field-optional { font-weight: 400; color: var(--muted); }
 .contact-info p { margin-bottom: 8px; }
 
 .lightbox {
@@ -406,14 +436,30 @@ strong { color: var(--text); }
   align-items: center;
   justify-content: center;
   padding: 24px;
-  z-index: 120;
+  z-index: 1000;
 }
 .lightbox.show { display: flex; }
+body.lightbox-open .booking-bar,
+body.lightbox-open .whatsapp-float { display: none; }
 .lightbox img {
   max-width: min(1100px, 94vw);
   max-height: 84vh;
   border-radius: 18px;
   box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.lightbox-counter {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 .lightbox-close {
   position: absolute;
@@ -446,7 +492,17 @@ strong { color: var(--text); }
 .lightbox-nav:hover { background: rgba(255,255,255,0.35); }
 
 /* Static nav for the standalone legal pages, which have no hamburger */
-.nav-menu--static { display: flex !important; position: static !important; }
+.nav-menu.nav-menu--static {
+  display: flex !important;
+  position: static !important;
+  flex-direction: row;
+  align-items: center;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+  inset: auto;
+}
 
 .legal { max-width: 760px; }
 .legal h1 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
@@ -456,7 +512,8 @@ strong { color: var(--text); }
   margin-bottom: 12px;
 }
 .legal p { margin-bottom: 16px; }
-.legal a { color: var(--accent-dark); text-decoration: underline; }
+/* :not(.btn) so this never beats .btn { color:#fff } on the 404 buttons */
+.legal a:not(.btn) { color: var(--accent-dark); text-decoration: underline; }
 .legal .feature-list { margin-bottom: 16px; }
 .legal-meta {
   font-size: 0.86rem;
@@ -464,17 +521,30 @@ strong { color: var(--text); }
   margin-bottom: 28px;
 }
 
-.site-footer { background: #152836; color: #fff; padding: 40px 0; }
-.footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+.site-footer { background: #152836; color: #fff; padding: 72px 0 32px; }
+.footer-grid { grid-template-columns: 1.6fr 1fr 1.2fr 1fr; }
 .footer-grid h4 { color: #fff; }
 .footer-grid a,
 .footer-grid p { color: rgba(255,255,255,0.84); }
-.footer-grid a { display: block; margin-bottom: 8px; }
+.footer-address { margin: 4px 0 0; font-size: 0.9rem; }
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+}
+.footer-legal p { margin: 0; font-size: 0.86rem; color: rgba(255,255,255,0.7); }
+.footer-legal a { color: rgba(255,255,255,0.84); text-decoration: underline; font-size: 0.86rem; }
+.footer-grid a { display: block; padding: 7px 0; }
 
 .whatsapp-float {
   position: fixed;
   right: 22px;
-  bottom: 92px;
+  bottom: 24px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -517,10 +587,10 @@ strong { color: var(--text); }
   border-radius: 999px;
   font-weight: 700;
   letter-spacing: 0.01em;
-  background: #b48a57;
+  background: var(--accent-btn);
   box-shadow: 0 8px 18px rgba(0,0,0,0.14);
 }
-.booking-btn.whatsapp { background: #25D366; }
+.booking-btn.whatsapp { background: #1f7742; }
 .booking-btn.airbnb { background: #FF5A5F; }
 
 .review-card {
@@ -553,8 +623,8 @@ strong { color: var(--text); }
   margin-bottom: 14px;
 }
 .review-star {
-  color: var(--accent);
-  font-size: 0.9rem;
+  color: var(--accent-dark);
+  font-size: 1.15rem;
   letter-spacing: 0.05em;
 }
 .review-quote {
@@ -633,8 +703,10 @@ a.review-platform:hover {
   .split,
   .map-grid,
   .contact-grid,
-  .footer-grid,
-  .amenities-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  /* Two across on tablets. One column here gave ~940px-wide, 100px-tall cards
+     with 600px of empty space beside three words of text. */
+  .amenities-grid { grid-template-columns: repeat(2, 1fr); }
   /* Three across on tablets. Collapsing the gallery to a single column here
      used to make tablet thumbnails larger than the two-column phone layout. */
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
@@ -647,6 +719,11 @@ a.review-platform:hover {
   .booking-bar {
     display: flex;
   }
+  /* Clear the fixed bar so it stops covering page content */
+  body { padding-bottom: 86px; }
+  /* The bar already carries a WhatsApp button; the float duplicated it and
+     was painted behind it, making it a dead element. */
+  .whatsapp-float { display: none; }
 }
 
 @media (max-width: 820px) {
@@ -666,6 +743,18 @@ a.review-platform:hover {
     align-items: flex-start;
   }
   .nav-menu.show { display: flex; }
+  /* Full-width rows are for the dropdown panel only; the legal pages' static
+     nav stays inline, or its labels wrap and the header doubles in height. */
+  .nav-menu:not(.nav-menu--static) a { display: block; width: 100%; padding: 11px 8px; }
+  .nav-menu:not(.nav-menu--static) a.btn { width: auto; padding: 10px 18px; }
+  .nav-menu--static { gap: 14px; }
+  .nav-menu--static a { white-space: nowrap; }
+}
+
+@media (max-width: 600px) {
+  .amenities-grid { grid-template-columns: 1fr; }
+  /* The logo already links home, so this label is redundant once space is tight */
+  .nav-back { display: none; }
 }
 
 @media (max-width: 760px) {
@@ -683,6 +772,27 @@ a.review-platform:hover {
   .whatsapp-box { padding: 28px 24px; }
   .whatsapp-float { right: 14px; bottom: 20px; padding: 11px 14px; }
   .whatsapp-float span { font-size: 13px; }
+
+  /* Use the screen: the photo was rendering at ~31% of the viewport with the
+     arrows sitting on top of it. */
+  .lightbox { padding: 12px; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: calc(100vh - 150px);
+    border-radius: 12px;
+  }
+  .lightbox-nav {
+    top: auto;
+    bottom: 18px;
+    transform: none;
+    font-size: 26px;
+    min-width: 56px;
+    min-height: 48px;
+  }
+  .lightbox-nav.prev { left: 18px; }
+  .lightbox-nav.next { right: 18px; }
+  .lightbox-counter { bottom: 32px; }
+  .lightbox-close { top: 12px; right: 12px; }
 }
 
 .contact-grid {
@@ -706,6 +816,13 @@ a.review-platform:hover {
   align-self: start;
 }
 
+.calendar-price {
+  margin: -4px 0 14px;
+  font-size: 0.94rem;
+  color: var(--muted);
+}
+.calendar-price strong { color: var(--text); }
+
 #availabilityCalendar {
   margin-top: 6px;
 }
@@ -728,12 +845,17 @@ a.review-platform:hover {
 
 #availabilityCalendar .fc-button {
   border-radius: 999px !important;
-  padding: 4px 10px !important;
-  font-size: 0.76rem !important;
+  padding: 8px 16px !important;
+  font-size: 0.85rem !important;
   font-weight: 600 !important;
-  min-height: auto !important;
+  min-height: 44px !important;
+  min-width: 44px !important;
   line-height: 1.2 !important;
   box-shadow: none !important;
+}
+#availabilityCalendar .fc-button:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed;
 }
 
 #availabilityCalendar .fc-button:focus {
@@ -825,14 +947,14 @@ a.review-platform:hover {
   margin-top: 10px;
   font-size: 0.88rem;
   line-height: 1.5;
-  opacity: 0.82;
+  color: var(--muted);
 }
 
 .form-privacy {
   margin: 14px 0 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  opacity: 0.8;
+  color: var(--muted);
 }
 .form-privacy a {
   color: var(--accent-dark);
@@ -890,7 +1012,7 @@ a.review-platform:hover {
   align-items: center;
   margin-top: 14px;
   font-size: 0.88rem;
-  opacity: 0.9;
+  color: var(--muted);
 }
 
 .legend-item {
@@ -935,43 +1057,26 @@ a.review-platform:hover {
 
 /* Selected range (soft gold gradient) */
 #availabilityCalendar .selected-range-preview {
-  background: linear-gradient(
-    180deg,
-    rgba(212, 175, 55, 0.28),
-    rgba(212, 175, 55, 0.16)
-  ) !important;
+  /* opacity must be reset too: .fc-bg-event sets 0.38, which multiplied these
+     alphas down to 6-11% and made the guest's own selection near-invisible */
+  opacity: 1 !important;
+  background: rgba(180, 138, 87, 0.42) !important;
   border-radius: 8px;
-  transition: all 0.2s ease;
-  box-shadow: 
-    inset 0 0 0 1px rgba(212, 175, 55, 0.35),
-    0 2px 8px rgba(212, 175, 55, 0.12);
-  background-size: 200% 200%;
-  animation: goldShimmer 3s ease infinite;
-}
-
-@keyframes goldShimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  transition: background 0.2s ease;
+  box-shadow: inset 0 0 0 1px rgba(143, 106, 64, 0.45);
 }
 
 /* TRUE start date */
 #availabilityCalendar .selected-start-anchor {
-  background: linear-gradient(
-    180deg,
-    rgba(212, 175, 55, 0.9),
-    rgba(184, 134, 11, 0.8)
-  ) !important;
+  opacity: 1 !important;
+  background: var(--accent-dark) !important;
   border-radius: 10px;
 }
 
 /* TRUE end date */
 #availabilityCalendar .selected-end-anchor {
-  background: linear-gradient(
-    180deg,
-    rgba(212, 175, 55, 0.9),
-    rgba(184, 134, 11, 0.8)
-  ) !important;
+  opacity: 1 !important;
+  background: var(--accent-dark) !important;
   border-radius: 10px;
 }
 
@@ -1023,13 +1128,17 @@ a.review-platform:hover {
 
 /* Visible keyboard focus, including the gallery thumbnails that act as buttons */
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--navy);
   outline-offset: 3px;
 }
 .gallery-item:focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--navy);
   outline-offset: 4px;
 }
+/* On the navy hero and footer the ring needs the light treatment instead */
+.hero :focus-visible,
+.site-footer :focus-visible,
+.platform-banner :focus-visible { outline-color: #ffffff; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
