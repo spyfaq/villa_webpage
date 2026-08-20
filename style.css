@@ -340,6 +340,30 @@ strong { color: var(--text); }
 }
 .gallery-placeholder span { color: var(--navy); font-weight: 700; text-align: center; }
 .gallery-more { text-align: center; margin-top: 34px; }
+
+/* FAQ answers are plain visible prose, not a JS accordion: retrieval pipelines
+   and search crawlers read rendered text, and collapsed content is a weaker
+   signal than text that is simply on the page. */
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 42px;
+}
+.faq-item h3 {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  color: var(--navy);
+}
+.faq-item p { margin-bottom: 0; }
+.footer-heading {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
 .extra-photo { display: none; }
 
 .map-grid { grid-template-columns: 0.95fr 1.05fr; align-items: stretch; }
@@ -759,6 +783,7 @@ a.review-platform:hover {
 
 @media (max-width: 760px) {
   .section { padding: 70px 0; }
+  .faq-grid { grid-template-columns: 1fr; gap: 24px; }
   .form-row { grid-template-columns: 1fr; }
   .hero-grid { min-height: auto; padding: 56px 0 68px; }
   .hero-image-card img,

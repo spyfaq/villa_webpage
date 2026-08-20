@@ -1,0 +1,55 @@
+# Olga's Luxury Villa
+
+> A privately owned 3-bedroom holiday villa in Kontrakia, Corfu, Greece, with a
+> private infinity pool and panoramic views over the Ionian Sea, Gouvia Marina
+> and Corfu Town. It sleeps 6 and is bookable directly with the owner.
+
+This file summarises the key facts about a single property so they can be read
+without parsing the page. Everything here is also stated in plain text on the
+website itself. Source of truth: https://olgasluxuryvilla-corfu.com/
+
+## The property
+
+- Name: Olga's Luxury Villa
+- Type: Private holiday villa / vacation rental (whole property, not shared)
+- Location: Kontrakia, Corfu 49100, Ionian Islands, Greece
+- Coordinates: 39.6347, 19.8673
+- Sleeps: 6 guests
+- Bedrooms: 3
+- Bathrooms: 2.5 (two full bathrooms, one ground-floor guest WC)
+- Indicative rate: from EUR 499 per night, varying by season and length of stay
+- Check-in from 15:00, check-out by 11:00
+- Pets: not accepted
+
+## Amenities
+
+- Private infinity pool with sea views and sun loungers
+- Panoramic views of Corfu Town, the Ionian Sea and Gouvia Marina
+- Outdoor BBQ and dining area
+- Multiple balconies and terraces
+- Fully equipped kitchen and indoor dining area
+- Air conditioning throughout
+- High-speed Wi-Fi, and a desk area for working
+- Private on-site parking, free of charge
+
+## Distances
+
+- Corfu Town (UNESCO Old Town): about 6 km, roughly 10 minutes by car
+- Corfu Airport (CFU): about 15 minutes by car
+- Kontokali Beach: about 5 minutes by car
+- Gouvia Marina: about 5 minutes by car
+- Dassia Beach: about 10 minutes by car
+
+## Booking
+
+- Direct enquiry: https://olgasluxuryvilla-corfu.com/#contact
+- Booking direct avoids the platform service fee, typically 15% or more
+- Email: olgasluxuryvilla.corfu@gmail.com
+- Phone / WhatsApp: +30 698 880 3182
+- Also listed on Airbnb and Booking.com
+
+## Pages
+
+- [Home](https://olgasluxuryvilla-corfu.com/): the villa, gallery, availability calendar and enquiry form
+- [Frequently asked questions](https://olgasluxuryvilla-corfu.com/#faq): practical details for guests
+- [Privacy policy](https://olgasluxuryvilla-corfu.com/privacy.html): how enquiry data is handled
