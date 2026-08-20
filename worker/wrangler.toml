@@ -1,0 +1,31 @@
+# Enquiry form handler for olgasluxuryvilla-corfu.com
+#
+# Replace the two REPLACE_ME values below with the real addresses before
+# deploying, then:   npx wrangler deploy
+#
+# TO_ADDRESS must be verified as a destination address in
+# Cloudflare > Email > Email Routing > Destination addresses, or the send
+# binding will refuse to deliver.
+
+name = "villa-enquiry"
+main = "src/index.js"
+compatibility_date = "2026-08-20"
+compatibility_flags = ["nodejs_compat"]
+
+# Free-tier send binding. Delivers only to verified destination addresses,
+# which is exactly what a contact form needs, and costs nothing.
+[[send_email]]
+name = "ENQUIRY_MAILER"
+destination_address = "REPLACE_ME_owner_inbox@example.com"
+
+[vars]
+ALLOWED_ORIGIN = "https://olgasluxuryvilla-corfu.com"
+FROM_ADDRESS = "form@olgasluxuryvilla-corfu.com"
+TO_ADDRESS = "REPLACE_ME_owner_inbox@example.com"
+
+# Serve the Worker from the site's own domain rather than a workers.dev URL.
+# Only this subdomain is proxied through Cloudflare; the apex stays DNS-only
+# so GitHub Pages keeps managing its own certificate.
+# [[routes]]
+# pattern = "forms.olgasluxuryvilla-corfu.com"
+# custom_domain = true

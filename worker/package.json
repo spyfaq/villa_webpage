@@ -1,0 +1,16 @@
+{
+  "name": "villa-enquiry-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/validate.test.mjs"
+  },
+  "dependencies": {
+    "mimetext": "^3.0.24"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
