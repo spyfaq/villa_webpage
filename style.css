@@ -444,6 +444,7 @@ strong { color: var(--text); }
   background: #fff;
 }
 .booking-form textarea { resize: vertical; min-height: 148px; }
+.booking-form button[type="submit"] { margin-top: 20px; }
 .field { display: grid; gap: 6px; min-width: 0; }
 .field > label {
   font-size: 0.82rem;
