@@ -110,6 +110,11 @@ def normalize_event(evt: dict):
     if "DTSTART" not in evt:
         return None
 
+    # A cancelled booking no longer blocks the dates.
+    status = evt.get("STATUS", {}).get("value", "").strip().upper()
+    if status == "CANCELLED":
+        return None
+
     dtstart_meta = evt["DTSTART"]
     dtend_meta = evt.get("DTEND")
 
@@ -199,14 +204,35 @@ def main():
         print(f"Fetching: {url[:80]}...")
         try:
             ics_text = fetch_text(url)
-            parsed = parse_ics_events(ics_text)
-            for evt in parsed:
-                norm = normalize_event(evt)
-                if norm:
-                    normalized_events.append(norm)
         except Exception as exc:
-            print(f"Failed to process {url}: {exc}")
+            print(f"Failed to fetch {url}: {exc}")
             sys.exit(1)
+
+        # A revoked or rotated calendar URL typically answers 200 with an HTML
+        # error page. Parsing that yields zero events, which would publish the
+        # platform's booked dates as available and invite a double booking.
+        # Refuse to write anything unless every feed really is a calendar.
+        if "BEGIN:VCALENDAR" not in ics_text.upper():
+            print(f"Response from {url[:80]} is not an iCalendar feed. Refusing to update.")
+            sys.exit(1)
+
+        try:
+            parsed = parse_ics_events(ics_text)
+        except Exception as exc:
+            print(f"Failed to parse {url}: {exc}")
+            sys.exit(1)
+
+        if not parsed:
+            print(f"  warning: feed parsed but contained no VEVENT entries")
+
+        for evt in parsed:
+            try:
+                norm = normalize_event(evt)
+            except Exception as exc:
+                print(f"Failed to normalize an event from {url[:80]}: {exc}")
+                sys.exit(1)
+            if norm:
+                normalized_events.append(norm)
 
     final_events = dedupe_events(normalized_events)
 

@@ -11,8 +11,8 @@
   <meta property="og:title" content="Luxury Villa Corfu with Infinity Pool | Olga’s Luxury Villa" />
   <meta property="og:description" content="Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town." />
   <meta property="og:image" content="https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="800" />
+  <meta property="og:image:width" content="2048" />
+  <meta property="og:image:height" content="1446" />
   <meta property="og:url" content="https://olgasluxuryvilla-corfu.com/" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -20,28 +20,22 @@
   <meta name="twitter:description" content="Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town." />
   <meta name="twitter:image" content="https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-702REPNHMK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <!-- No analytics provider is connected. Google Analytics was removed because
+       its cookies require prior consent under Greek Law 3471/2006 art. 4(5),
+       which this site does not ask for. The event taxonomy is still wired up in
+       script.js behind trackEvent(); connect a cookieless provider there. -->
 
-    gtag('config', 'G-702REPNHMK');
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css" />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.8/index.global.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.8/index.global.min.js"></script>
+  <!-- FullCalendar 6.1.8, served from this origin rather than a CDN so no third
+       party receives visitors' IP addresses. v6 injects its own CSS, and
+       availability comes from availability.json, so neither ical.js nor the
+       icalendar plugin is needed. See vendor/fullcalendar/LICENSE.md. -->
+  <script defer src="vendor/fullcalendar/core.min.js"></script>
+  <script defer src="vendor/fullcalendar/daygrid.min.js"></script>
+  <script defer src="vendor/fullcalendar/interaction.min.js"></script>
 
   <script type="application/ld+json">
   {
@@ -68,7 +62,7 @@
         "description": "Luxury villa in Corfu with private infinity pool, panoramic sea views, BBQ lounge and spacious terraces near Corfu Town.",
         "inLanguage": "en",
         "datePublished": "2026-01-01",
-        "dateModified": "2026-04-03",
+        "dateModified": "2026-07-30",
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp"
@@ -183,19 +177,24 @@
         "petsAllowed": false,
         "telephone": "+306988803182",
         "priceRange": "€€€",
-        "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "5",
-                "reviewCount": "23"
-              },
-        "priceSpecification": {
-          "@type": "PriceSpecification",
-          "minPrice": 400,
-          "maxPrice": 1000,
-          "priceCurrency": "EUR",
-          "description": "Nightly rate depending on season and duration"
+        "makesOffer": {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "minPrice": 499,
+            "maxPrice": 1000,
+            "priceCurrency": "EUR",
+            "unitCode": "DAY",
+            "description": "Nightly rate depending on season and duration"
+          },
+          "eligibleDuration": {
+            "@type": "QuantitativeValue",
+            "minValue": 4,
+            "unitCode": "DAY",
+            "description": "Minimum stay of 4 nights"
+          }
         },
-
         "image": [
           "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-infinity-pool-hero.webp",
           "https://olgasluxuryvilla-corfu.com/images/olgas-luxury-villa-corfu-sea-view-balcony.webp",
@@ -223,6 +222,8 @@
           },
           "numberOfBedrooms": 3,
           "numberOfBathroomsTotal": 3,
+          "numberOfFullBathrooms": 2,
+          "numberOfPartialBathrooms": 1,
           "amenityFeature": [
             {
               "@type": "LocationFeatureSpecification",
@@ -243,6 +244,53 @@
               "@type": "LocationFeatureSpecification",
               "name": "Fully Equipped Kitchen",
               "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Washing Machine",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Tumble Dryer",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Dishwasher",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Cot Available",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "High Chair Available",
+              "value": true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "Free Private Parking",
+              "value": true
+            }
+          ],
+          "bed": [
+            {
+              "@type": "BedDetails",
+              "typeOfBed": "King",
+              "numberOfBeds": 1
+            },
+            {
+              "@type": "BedDetails",
+              "typeOfBed": "Queen",
+              "numberOfBeds": 2
+            },
+            {
+              "@type": "BedDetails",
+              "typeOfBed": "Sofa Bed",
+              "numberOfBeds": 1
             }
           ]
         }
@@ -256,23 +304,39 @@
             "name": "Where is Olga’s Luxury Villa located?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Olga’s Luxury Villa is located in Corfu, Greece, near Corfu Town, with panoramic views of the Ionian Sea and Gouvia Marina."
+              "text": "The villa is in Kontrakia, on a hillside about 6 km from Corfu Town, with panoramic views over the Ionian Sea, Gouvia Marina and Corfu Town itself. Corfu Airport is roughly 15 minutes away by car."
             }
           },
           {
             "@type": "Question",
-            "name": "How many guests can stay at Olga’s Luxury Villa?",
+            "name": "How far is Corfu Old Town?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Olga’s Luxury Villa can accommodate up to 6 guests."
+              "text": "Corfu Old Town, a UNESCO World Heritage site, is about 10 minutes away by car — roughly 6 km from the villa."
             }
           },
           {
             "@type": "Question",
-            "name": "Does the villa have a private pool?",
+            "name": "How far is the nearest beach?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, the villa features a private infinity pool with panoramic sea views."
+              "text": "Kontokali Beach is about 5 minutes away by car, and Dassia Beach — known for clear water and water sports — is about 10 minutes. Gouvia Marina, with its waterfront restaurants and cafés, is also about 5 minutes away."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need a car to stay at the villa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "There is a bus stop about 100 metres from the villa, so getting into Corfu Town without a car is possible. That said, we recommend hiring one. The villa sits on a hillside, and a car makes the beaches, the Old Town and the rest of the island far easier to reach on your own schedule."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How many guests can stay at the villa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The villa sleeps up to 6 guests across 3 bedrooms."
             }
           },
           {
@@ -280,15 +344,119 @@
             "name": "How many bedrooms and bathrooms does the villa have?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The villa offers 3 bedrooms and 2.5 bathrooms."
+              "text": "There are 3 bedrooms and 2.5 bathrooms — two full bathrooms and a ground-floor guest WC."
             }
           },
           {
             "@type": "Question",
-            "name": "Can guests book directly?",
+            "name": "What are the sleeping arrangements?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, guests can enquire and book directly with the host through the website."
+              "text": "The three bedrooms have one king bed and two queen beds. There is also a sofa bed, which gives you some extra flexibility in how your group sleeps."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the villa have a private pool?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The villa has its own private infinity pool with panoramic sea views, for the exclusive use of guests staying at the villa. There are sun loungers on the pool terrace."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the pool heated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No, the pool is not heated."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a kitchen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, the villa has a fully equipped kitchen with an indoor dining area, plus an outdoor BBQ and dining area on the terrace."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a washing machine and a dishwasher?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The villa has a washing machine, a tumble dryer and a dishwasher."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there air conditioning?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, there is air conditioning throughout the villa."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there Wi-Fi at the villa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, high-speed Wi-Fi is available throughout the villa, and there is a desk area if you need to work during your stay."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there parking at the villa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, the villa has private parking on site at no extra cost."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you have a cot and a high chair for young children?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, both a cot and a high chair are available. Mention it in your enquiry and we will have them ready for your arrival."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are pets allowed?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No, we are not able to accept pets at the villa."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a minimum stay?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, the minimum stay is 4 nights."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What time is check-in and check-out?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Check-in is from 15:00 and check-out is by 11:00. If you are arriving on a late flight, message us in advance and we will do our best to accommodate you."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is included in the price?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bed linen, bath towels and pool towels are all provided, and both the final clean and a mid-stay clean are included. The kitchen is fully equipped, Wi-Fi and air conditioning are included throughout, and parking on site is free."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I book directly with the owner?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can send an enquiry through the form on this site or message us on WhatsApp, and we will confirm availability personally — usually within 12 hours. Booking direct means no platform service fee, which typically saves 15% or more. The villa is also listed on Airbnb and Booking.com if you prefer to book there."
             }
           }
         ]
@@ -302,8 +470,8 @@
   <header class="site-header">
     <div class="container nav">
       <a href="#top" class="logo">Olga’s Luxury Villa</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
-      <nav class="nav-menu" id="navMenu">
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <nav class="nav-menu" id="navMenu" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#amenities">Amenities</a>
         <a href="#gallery">Gallery</a>
@@ -330,6 +498,7 @@
             <a href="#map" class="btn btn-outline" id="heroViewLocation" data-track="map_cta" data-track-location="hero">View Location</a>
           </div>
           <div class="hero-badges">
+            <span class="hero-badge-price">From €499 / night</span>
             <span>6 Guests</span>
             <span>3 Bedrooms</span>
             <span>2.5 Bathrooms</span>
@@ -344,10 +513,14 @@
         </div>
         <div class="hero-image-card">
           <img src="images/olgas-luxury-villa-corfu-infinity-pool-hero.webp"
-          alt="Luxury villa in Corfu with infinity pool and sea view"
-          width="1200"
-          height="800"
-          loading="eager" />
+          srcset="images/thumbs/olgas-luxury-villa-corfu-infinity-pool-hero.webp 800w, images/olgas-luxury-villa-corfu-infinity-pool-hero.webp 2048w"
+          sizes="(max-width: 1040px) 92vw, 600px"
+          alt="Aerial view of Olga’s Luxury Villa in Corfu, its pool and gardens, with the Ionian Sea and the Corfu coastline beyond"
+          width="1900"
+          height="1446"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async" />
         </div>
       </div>
     </section>
@@ -372,7 +545,7 @@
     <section id="about" class="section alt-bg">
       <div class="container split">
         <div class="image-stack">
-          <img src="images/olgas-luxury-villa-corfu-infinity-pool-view.webp" alt="Olga’s Luxury Villa infinity pool with sunset and sea view" class="stack-main" />
+          <img src="images/olgas-luxury-villa-corfu-infinity-pool-view.webp" alt="Olga’s Luxury Villa infinity pool with sunset and sea view" class="stack-main" width="2200" height="1467" loading="lazy" decoding="async" />
           <div class="stack-card">
             <p class="section-tag small-tag">Signature Stay</p>
             <h3>Luxury private villa experience</h3>
@@ -466,48 +639,108 @@
         <div class="gallery-grid">
 
         <!-- HERO / EXTERIOR -->
-        <img src="images/olgas-luxury-villa-corfu-infinity-pool-hero.webp" class="gallery-item gallery-large" alt="Aerial view of Olga’s Luxury Villa in Corfu with private infinity pool and panoramic sea view">
-        <img src="images/olgas-luxury-villa-corfu-aerial-view.webp" class="gallery-item extra-photo" alt="Drone aerial view of luxury villa and infinity pool overlooking the Corfu coastline" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-aerial-sunset-view.webp" class="gallery-item extra-photo" alt="Sunset drone view of Olga’s Luxury Villa with pool and Ionian Sea view in Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-entrance.webp" class="gallery-item extra-photo" alt="Entrance of Olga’s Luxury Villa holiday home in Corfu surrounded by greenery" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-garden-area.webp" class="gallery-item extra-photo" alt="Garden area of the luxury villa in Corfu with Mediterranean plants" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-garden-pool-view.webp" class="gallery-item extra-photo" alt="Garden flowers and pool view at Olga’s Luxury Villa in Corfu" width="1200" height="800" loading="lazy">
+        <button type="button" class="gallery-item gallery-large" data-full="images/olgas-luxury-villa-corfu-infinity-pool-hero.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-infinity-pool-hero.webp" alt="Aerial view of Olga’s Luxury Villa in Corfu with private infinity pool and panoramic sea view" srcset="images/thumbs/olgas-luxury-villa-corfu-infinity-pool-hero.webp 800w, images/olgas-luxury-villa-corfu-infinity-pool-hero.webp 2048w" sizes="(max-width: 760px) 92vw, (max-width: 1040px) 62vw, 580px" width="800" height="565" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-aerial-view.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-aerial-view.webp" alt="Drone aerial view of luxury villa and infinity pool overlooking the Corfu coastline" srcset="images/thumbs/olgas-luxury-villa-corfu-aerial-view.webp 800w, images/olgas-luxury-villa-corfu-aerial-view.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="600" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-aerial-sunset-view.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-aerial-sunset-view.webp" alt="Sunset drone view of Olga’s Luxury Villa with pool and Ionian Sea view in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-aerial-sunset-view.webp 800w, images/olgas-luxury-villa-corfu-aerial-sunset-view.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="600" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-entrance.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-entrance.webp" alt="Entrance of Olga’s Luxury Villa holiday home in Corfu surrounded by greenery" srcset="images/thumbs/olgas-luxury-villa-corfu-entrance.webp 800w, images/olgas-luxury-villa-corfu-entrance.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-garden-area.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-garden-area.webp" alt="Garden area of the luxury villa in Corfu with Mediterranean plants" srcset="images/thumbs/olgas-luxury-villa-corfu-garden-area.webp 800w, images/olgas-luxury-villa-corfu-garden-area.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-garden-pool-view.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-garden-pool-view.webp" alt="Garden flowers and pool view at Olga’s Luxury Villa in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-garden-pool-view.webp 800w, images/olgas-luxury-villa-corfu-garden-pool-view.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
 
         <!-- POOL AREA -->
-        <img src="images/olgas-luxury-villa-corfu-infinity-pool-view.webp" class="gallery-item" alt="Private infinity pool with panoramic sea view at Olga’s Luxury Villa Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-infinity-pool-terrace.webp" class="gallery-item extra-photo" alt="Infinity swimming pool terrace with sun loungers overlooking the sea in Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-pool-sunbeds.webp" class="gallery-item extra-photo" alt="Sunbed beside the infinity pool with Ionian Sea view at Olga’s Luxury Villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-night-exterior.webp" class="gallery-item extra-photo" alt="Night view of Olga’s Luxury Villa and illuminated infinity pool" width="1200" height="800" loading="lazy">
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-infinity-pool-view.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-infinity-pool-view.webp" alt="Private infinity pool with panoramic sea view at Olga’s Luxury Villa Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-infinity-pool-view.webp 800w, images/olgas-luxury-villa-corfu-infinity-pool-view.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-infinity-pool-terrace.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-infinity-pool-terrace.webp" alt="Infinity swimming pool terrace with sun loungers overlooking the sea in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-infinity-pool-terrace.webp 800w, images/olgas-luxury-villa-corfu-infinity-pool-terrace.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-pool-sunbeds.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-pool-sunbeds.webp" alt="Sunbed beside the infinity pool with Ionian Sea view at Olga’s Luxury Villa" srcset="images/thumbs/olgas-luxury-villa-corfu-pool-sunbeds.webp 800w, images/olgas-luxury-villa-corfu-pool-sunbeds.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-night-exterior.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-night-exterior.webp" alt="Night view of Olga’s Luxury Villa and illuminated infinity pool" srcset="images/thumbs/olgas-luxury-villa-corfu-night-exterior.webp 800w, images/olgas-luxury-villa-corfu-night-exterior.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
 
         <!-- TERRACES -->
-        <img src="images/olgas-luxury-villa-corfu-sea-view-balcony.webp" class="gallery-item" alt="Sea view balcony with outdoor seating at Olga’s Luxury Villa in Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-balcony-dining.webp" class="gallery-item extra-photo" alt="Outdoor dining table on terrace with panoramic sea view in Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-balcony-coffee-view.webp" class="gallery-item extra-photo" alt="Balcony coffee table with relaxing sea view at Olga’s Luxury Villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-bbq-dining-area.webp" class="gallery-item extra-photo" alt="Outdoor BBQ and dining area for guests at Olga’s Luxury Villa Corfu" width="1200" height="800" loading="lazy">
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-sea-view-balcony.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-sea-view-balcony.webp" alt="Sea view balcony with outdoor seating at Olga’s Luxury Villa in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-sea-view-balcony.webp 800w, images/olgas-luxury-villa-corfu-sea-view-balcony.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-balcony-dining.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-balcony-dining.webp" alt="Outdoor dining table on terrace with panoramic sea view in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-balcony-dining.webp 800w, images/olgas-luxury-villa-corfu-balcony-dining.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-balcony-coffee-view.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-balcony-coffee-view.webp" alt="Balcony coffee table with relaxing sea view at Olga’s Luxury Villa" srcset="images/thumbs/olgas-luxury-villa-corfu-balcony-coffee-view.webp 800w, images/olgas-luxury-villa-corfu-balcony-coffee-view.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-bbq-dining-area.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-bbq-dining-area.webp" alt="Outdoor BBQ and dining area for guests at Olga’s Luxury Villa Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-bbq-dining-area.webp 800w, images/olgas-luxury-villa-corfu-bbq-dining-area.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
 
         <!-- LIVING AREAS -->
-        <img src="images/olgas-luxury-villa-corfu-living-room.webp" class="gallery-item" alt="Bright living room with comfortable seating inside Olga’s Luxury Villa Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-living-room-fireplace.webp" class="gallery-item extra-photo" alt="Elegant living room with fireplace in the luxury villa in Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-interior-staircase.webp" class="gallery-item extra-photo" alt="Interior staircase connecting floors inside Olga’s Luxury Villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-workspace.webp" class="gallery-item extra-photo" alt="Workspace desk area inside the luxury villa in Corfu" width="1200" height="800" loading="lazy">
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-living-room.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-living-room.webp" alt="Bright living room with comfortable seating inside Olga’s Luxury Villa Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-living-room.webp 800w, images/olgas-luxury-villa-corfu-living-room.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-living-room-fireplace.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-living-room-fireplace.webp" alt="Elegant living room with fireplace in the luxury villa in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-living-room-fireplace.webp 800w, images/olgas-luxury-villa-corfu-living-room-fireplace.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-interior-staircase.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-interior-staircase.webp" alt="Interior staircase connecting floors inside Olga’s Luxury Villa" srcset="images/thumbs/olgas-luxury-villa-corfu-interior-staircase.webp 800w, images/olgas-luxury-villa-corfu-interior-staircase.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-workspace.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-workspace.webp" alt="Workspace desk area inside the luxury villa in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-workspace.webp 800w, images/olgas-luxury-villa-corfu-workspace.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
 
         <!-- KITCHEN -->
-        <img src="images/olgas-luxury-villa-corfu-kitchen-dining-area.webp" class="gallery-item" alt="Fully equipped kitchen and dining area at Olga’s Luxury Villa Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-kitchen-fireplace.webp" class="gallery-item extra-photo" alt="Open kitchen and dining space with fireplace inside the villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-indoor-dining-area.webp" class="gallery-item extra-photo" alt="Indoor dining area for guests at Olga’s Luxury Villa in Corfu" width="1200" height="800" loading="lazy">
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-kitchen-dining-area.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-kitchen-dining-area.webp" alt="Fully equipped kitchen and dining area at Olga’s Luxury Villa Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-kitchen-dining-area.webp 800w, images/olgas-luxury-villa-corfu-kitchen-dining-area.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="534" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-kitchen-fireplace.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-kitchen-fireplace.webp" alt="Open kitchen and dining space with fireplace inside the villa" srcset="images/thumbs/olgas-luxury-villa-corfu-kitchen-fireplace.webp 800w, images/olgas-luxury-villa-corfu-kitchen-fireplace.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-indoor-dining-area.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-indoor-dining-area.webp" alt="Indoor dining area for guests at Olga’s Luxury Villa in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-indoor-dining-area.webp 800w, images/olgas-luxury-villa-corfu-indoor-dining-area.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="534" loading="lazy" decoding="async">
+        </button>
 
         <!-- BEDROOMS -->
-        <img src="images/olgas-luxury-villa-corfu-master-bedroom.webp" class="gallery-item" alt="Master bedroom with elegant decor at Olga’s Luxury Villa in Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-master-bedroom-view.webp" class="gallery-item extra-photo" alt="Luxury master bedroom with comfortable bed in Corfu holiday villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-bedroom-balcony.webp" class="gallery-item" alt="Bright bedroom with balcony access and natural light in the villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-guest-bedroom.webp" class="gallery-item extra-photo" alt="Guest bedroom with large windows at Olga’s Luxury Villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-bedroom-balcony-view.webp" class="gallery-item extra-photo" alt="Bedroom with balcony access and sea breeze in Corfu villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-second-bedroom.webp" class="gallery-item" alt="Comfortable guest bedroom inside Olga’s Luxury Villa Corfu" width="1200" height="800" loading="lazy">
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-master-bedroom.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-master-bedroom.webp" alt="Master bedroom with elegant decor at Olga’s Luxury Villa in Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-master-bedroom.webp 800w, images/olgas-luxury-villa-corfu-master-bedroom.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-master-bedroom-view.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-master-bedroom-view.webp" alt="Luxury master bedroom with comfortable bed in Corfu holiday villa" srcset="images/thumbs/olgas-luxury-villa-corfu-master-bedroom-view.webp 800w, images/olgas-luxury-villa-corfu-master-bedroom-view.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-bedroom-balcony.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-bedroom-balcony.webp" alt="Bright bedroom with balcony access and natural light in the villa" srcset="images/thumbs/olgas-luxury-villa-corfu-bedroom-balcony.webp 800w, images/olgas-luxury-villa-corfu-bedroom-balcony.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-guest-bedroom.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-guest-bedroom.webp" alt="Guest bedroom with large windows at Olga’s Luxury Villa" srcset="images/thumbs/olgas-luxury-villa-corfu-guest-bedroom.webp 800w, images/olgas-luxury-villa-corfu-guest-bedroom.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-bedroom-balcony-view.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-bedroom-balcony-view.webp" alt="Bedroom with balcony access and sea breeze in Corfu villa" srcset="images/thumbs/olgas-luxury-villa-corfu-bedroom-balcony-view.webp 800w, images/olgas-luxury-villa-corfu-bedroom-balcony-view.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-second-bedroom.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-second-bedroom.webp" alt="Comfortable guest bedroom inside Olga’s Luxury Villa Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-second-bedroom.webp 800w, images/olgas-luxury-villa-corfu-second-bedroom.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="534" loading="lazy" decoding="async">
+        </button>
 
         <!-- BATHROOMS -->
-        <img src="images/olgas-luxury-villa-corfu-modern-bathroom.webp" class="gallery-item" alt="Modern bathroom with shower at Olga’s Luxury Villa Corfu" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-ensuite-bathroom.webp" class="gallery-item extra-photo" alt="Ensuite bathroom with modern design in the luxury villa" width="1200" height="800" loading="lazy">
-        <img src="images/olgas-luxury-villa-corfu-guest-wc.webp" class="gallery-item extra-photo" alt="Ground floor guest WC in Olga’s Luxury Villa Corfu" width="1200" height="800" loading="lazy">
+        <button type="button" class="gallery-item" data-full="images/olgas-luxury-villa-corfu-modern-bathroom.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-modern-bathroom.webp" alt="Modern bathroom with shower at Olga’s Luxury Villa Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-modern-bathroom.webp 800w, images/olgas-luxury-villa-corfu-modern-bathroom.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="534" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-ensuite-bathroom.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-ensuite-bathroom.webp" alt="Ensuite bathroom with modern design in the luxury villa" srcset="images/thumbs/olgas-luxury-villa-corfu-ensuite-bathroom.webp 800w, images/olgas-luxury-villa-corfu-ensuite-bathroom.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
+        <button type="button" class="gallery-item extra-photo" data-full="images/olgas-luxury-villa-corfu-guest-wc.webp">
+          <img src="images/thumbs/olgas-luxury-villa-corfu-guest-wc.webp" alt="Ground floor guest WC in Olga’s Luxury Villa Corfu" srcset="images/thumbs/olgas-luxury-villa-corfu-guest-wc.webp 800w, images/olgas-luxury-villa-corfu-guest-wc.webp 2200w" sizes="(max-width: 760px) 46vw, (max-width: 1040px) 30vw, 281px" width="800" height="533" loading="lazy" decoding="async">
+        </button>
         </div>
 
         <div class="gallery-more">
@@ -517,7 +750,7 @@
     </section>
 
     <!-- Guest Reviews -->
-    <section class="section">
+    <section id="reviews" class="section">
     <div class="container">
 
     <div class="section-heading">
@@ -537,7 +770,13 @@
       </blockquote>
       <footer class="review-footer">
         <span class="review-author">Verified Guest</span>
-        <span class="review-platform review-platform--airbnb">Airbnb</span>
+        <a class="review-platform review-platform--airbnb"
+           href="https://www.airbnb.com/rooms/1363896998863141212/reviews"
+           target="_blank" rel="noopener noreferrer"
+           data-track="review_click" data-platform="airbnb" data-track-location="review-card">
+          Airbnb<span class="review-platform-arrow" aria-hidden="true">↗</span>
+          <span class="visually-hidden">— read this review on Airbnb</span>
+        </a>
       </footer>
     </article>
 
@@ -550,7 +789,13 @@
       </blockquote>
       <footer class="review-footer">
         <span class="review-author">Verified Guest</span>
-        <span class="review-platform review-platform--booking">Booking.com</span>
+        <a class="review-platform review-platform--booking"
+           href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html#tab-reviews"
+           target="_blank" rel="noopener noreferrer"
+           data-track="review_click" data-platform="booking" data-track-location="review-card">
+          Booking.com<span class="review-platform-arrow" aria-hidden="true">↗</span>
+          <span class="visually-hidden">— read this review on Booking.com</span>
+        </a>
       </footer>
     </article>
 
@@ -563,7 +808,13 @@
       </blockquote>
       <footer class="review-footer">
         <span class="review-author">Verified Guest</span>
-        <span class="review-platform review-platform--airbnb">Airbnb</span>
+        <a class="review-platform review-platform--airbnb"
+           href="https://www.airbnb.com/rooms/1363896998863141212/reviews"
+           target="_blank" rel="noopener noreferrer"
+           data-track="review_click" data-platform="airbnb" data-track-location="review-card">
+          Airbnb<span class="review-platform-arrow" aria-hidden="true">↗</span>
+          <span class="visually-hidden">— read this review on Airbnb</span>
+        </a>
       </footer>
     </article>
 
@@ -599,7 +850,7 @@
     <section id="map" class="section alt-bg">
       <div class="container map-grid">
         <div>
-          <p class="section-tag">Map & Location</p>
+          <p class="section-tag">Map &amp; Location</p>
           <h2>Beautifully positioned in Corfu</h2>
           <div class="location-points">
             <div><strong>Area:</strong> Corfu, Greece</div>
@@ -610,8 +861,26 @@
             <a class="btn" href="https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99" target="_blank" rel="noopener noreferrer" id="openMapButton" data-track="map_open" data-track-location="map-section">Open Map</a>
           </div>
         </div>
-        <div class="map-card">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d24581.316538022165!2d19.86736389010467!3d39.63475585918662!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135b5c050218d9a5%3A0xc8d7b60ffae1bb49!2sOlgas%20Luxury%20Villa!5e0!3m2!1sel!2sgr!4v1772906177219!5m2!1sel!2sgr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <!-- The Google Maps embed sets Google cookies as soon as it loads, which
+             would need prior consent. It is therefore loaded only when the
+             visitor asks for it, which keeps the page free of consent-bearing
+             third parties on first load. -->
+        <div class="map-card map-consent" id="mapCard"
+             data-map-src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d24581.316538022165!2d19.86736389010467!3d39.63475585918662!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135b5c050218d9a5%3A0xc8d7b60ffae1bb49!2sOlgas%20Luxury%20Villa!5e0!3m2!1sel!2sgr!4v1772906177219!5m2!1sel!2sgr">
+          <div class="map-placeholder">
+            <h3>Interactive map</h3>
+            <p>
+              Loading the map connects you to Google Maps, which sets its own cookies
+              and receives your IP address. Nothing is sent until you choose to load it.
+            </p>
+            <button type="button" class="btn" id="loadMapButton"
+                    data-track="map_open" data-track-location="map-embed">Load the map</button>
+            <p class="map-placeholder-alt">
+              Or
+              <a href="https://maps.app.goo.gl/iS5Rs9qzBV3h1YQ99" target="_blank" rel="noopener noreferrer">open the location in Google Maps</a>
+              in a new tab.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -623,6 +892,11 @@
           <p class="section-tag">Explore Nearby</p>
           <h2>Best beaches and experiences near our luxury villa in Corfu</h2>
           <p>Stay close to Corfu’s coastline, historic sights and easy day trips while enjoying a peaceful hilltop base.</p>
+          <p class="section-links">
+            Read more: <a href="beaches-near-the-villa.html">beaches near the villa</a>,
+            <a href="the-area.html">the area around the villa</a>, and
+            <a href="getting-here.html">getting here from Corfu Airport</a>.
+          </p>
         </div>
         <div class="amenities-grid">
           <article class="card">
@@ -670,7 +944,7 @@
         <div class="amenities-grid">
           <article class="card">
             <h3>Best Direct Rate</h3>
-            <p>Book directly with us for the best available direct rate and a more personal booking experience.</p>
+            <p>Booking direct saves you the platform service fee — typically 15% or more — and gets you a more personal booking experience.</p>
           </article>
 
           <article class="card">
@@ -692,12 +966,106 @@
         <div>
           <p class="section-tag">Book Your Preferred Way</p>
           <h2>Direct, Airbnb, or Booking.com</h2>
-          <p class="direct-booking-badge">Best price when booking direct • No platform fees</p>
+          <p class="direct-booking-badge">Save 15%+ when booking direct • No platform service fees</p>
         </div>
         <div class="platform-links">
           <a class="btn" href="#contact" data-track="booking_path" data-platform="direct" data-track-location="platform-banner">Direct Booking</a>
           <a class="btn btn-light" href="https://airbnb.com/h/corfu-luxury-villa" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="airbnb" data-track-location="platform-banner">Airbnb</a>
           <a class="btn btn-light" href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="booking" data-track-location="platform-banner">Booking.com</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Frequently asked questions -->
+    <section id="faq" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-tag">Good to Know</p>
+          <h2>Frequently asked questions</h2>
+          <p>The practical details guests ask us most often. If your question isn’t here, message us and we’ll answer it.</p>
+        </div>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>Where is Olga’s Luxury Villa located?</h3>
+            <p>The villa is in Kontrakia, on a hillside about 6 km from Corfu Town, with panoramic views over the Ionian Sea, Gouvia Marina and Corfu Town itself. Corfu Airport is roughly 15 minutes away by car.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How far is Corfu Old Town?</h3>
+            <p>Corfu Old Town, a UNESCO World Heritage site, is about 10 minutes away by car — roughly 6 km from the villa.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How far is the nearest beach?</h3>
+            <p>Kontokali Beach is about 5 minutes away by car, and Dassia Beach — known for clear water and water sports — is about 10 minutes. Gouvia Marina, with its waterfront restaurants and cafés, is also about 5 minutes away.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need a car to stay at the villa?</h3>
+            <p>There is a bus stop about 100 metres from the villa, so getting into Corfu Town without a car is possible. That said, we recommend hiring one. The villa sits on a hillside, and a car makes the beaches, the Old Town and the rest of the island far easier to reach on your own schedule.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How many guests can stay at the villa?</h3>
+            <p>The villa sleeps up to 6 guests across 3 bedrooms.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How many bedrooms and bathrooms does the villa have?</h3>
+            <p>There are 3 bedrooms and 2.5 bathrooms — two full bathrooms and a ground-floor guest WC.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What are the sleeping arrangements?</h3>
+            <p>The three bedrooms have one king bed and two queen beds. There is also a sofa bed, which gives you some extra flexibility in how your group sleeps.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Does the villa have a private pool?</h3>
+            <p>Yes. The villa has its own private infinity pool with panoramic sea views, for the exclusive use of guests staying at the villa. There are sun loungers on the pool terrace.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is the pool heated?</h3>
+            <p>No, the pool is not heated.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there a kitchen?</h3>
+            <p>Yes, the villa has a fully equipped kitchen with an indoor dining area, plus an outdoor BBQ and dining area on the terrace.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there a washing machine and a dishwasher?</h3>
+            <p>Yes. The villa has a washing machine, a tumble dryer and a dishwasher.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there air conditioning?</h3>
+            <p>Yes, there is air conditioning throughout the villa.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there Wi-Fi at the villa?</h3>
+            <p>Yes, high-speed Wi-Fi is available throughout the villa, and there is a desk area if you need to work during your stay.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there parking at the villa?</h3>
+            <p>Yes, the villa has private parking on site at no extra cost.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do you have a cot and a high chair for young children?</h3>
+            <p>Yes, both a cot and a high chair are available. Mention it in your enquiry and we will have them ready for your arrival.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Are pets allowed?</h3>
+            <p>No, we are not able to accept pets at the villa.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there a minimum stay?</h3>
+            <p>Yes, the minimum stay is 4 nights.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What time is check-in and check-out?</h3>
+            <p>Check-in is from 15:00 and check-out is by 11:00. If you are arriving on a late flight, message us in advance and we will do our best to accommodate you.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What is included in the price?</h3>
+            <p>Bed linen, bath towels and pool towels are all provided, and both the final clean and a mid-stay clean are included. The kitchen is fully equipped, Wi-Fi and air conditioning are included throughout, and parking on site is free.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I book directly with the owner?</h3>
+            <p>Yes. You can send an enquiry through the form on this site or message us on WhatsApp, and we will confirm availability personally — usually within 12 hours. Booking direct means no platform service fee, which typically saves 15% or more. The villa is also listed on Airbnb and Booking.com if you prefer to book there.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -731,6 +1099,7 @@
         <div class="availability-card">
           <p class="section-tag">Availability Calendar</p>
           <h2>Explore possible dates</h2>
+          <p class="calendar-price">From <strong>€499 / night</strong> — final rate depends on season and length of stay.</p>
           <div id="availabilityCalendar"></div>
           <div class="calendar-legend">
             <span class="legend-item">
@@ -764,37 +1133,62 @@
             No payment is required to enquire. We confirm availability personally and usually reply within 12 hours.
           </p>
           <div class="form-row">
-            <input type="text" name="name" autocomplete="name" placeholder="Name" required>
-            <input type="email" name="email" autocomplete="email" placeholder="Email Address" required>
+            <div class="field">
+              <label for="fName">Name</label>
+              <input type="text" id="fName" name="name" autocomplete="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="fEmail">Email address</label>
+              <input type="email" id="fEmail" name="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
           </div>
 
           <div class="form-row form-row-dates">
-            <input type="date" name="check_in" required>
-            <input type="date" name="check_out" required>
+            <div class="field">
+              <label for="fCheckIn">Check-in</label>
+              <input type="date" id="fCheckIn" name="check_in" required>
+            </div>
+            <div class="field">
+              <label for="fCheckOut">Check-out</label>
+              <input type="date" id="fCheckOut" name="check_out" required>
+            </div>
           </div>
 
           <div class="form-row">
-            <input type="number" name="guests" min="1" placeholder="Guests" required>
-            <input type="tel" name="phone" autocomplete="tel" placeholder="Phone Number">
+            <div class="field">
+              <label for="fGuests">Guests <span class="field-optional">(max 6)</span></label>
+              <input type="number" id="fGuests" name="guests" min="1" max="6" placeholder="2" required>
+            </div>
+            <div class="field">
+              <label for="fPhone">Phone <span class="field-optional">(optional)</span></label>
+              <input type="tel" id="fPhone" name="phone" autocomplete="tel" placeholder="+30 …">
+            </div>
           </div>
 
-          <textarea name="trip_details" rows="2" placeholder="Tell us about your trip"></textarea>
+          <div class="field">
+            <label for="fTrip">Tell us about your trip <span class="field-optional">(optional)</span></label>
+            <textarea id="fTrip" name="trip_details" rows="2" placeholder="Anything that helps us prepare for your stay"></textarea>
+          </div>
 
           <button type="submit" class="btn" id="bookingSubmitButton">Send Request</button>
 
-          <p id="formMessage" aria-live="polite" style="display:none; margin-top:15px; color:#1f7742; font-weight:600;">
-            Thank you! Your request has been sent successfully. We will contact you soon.
+          <p id="formMessage" class="form-status" role="status" aria-live="polite" tabindex="-1" hidden></p>
+
+          <p class="form-privacy">
+            We use your details only to answer this enquiry and arrange your stay.
+            See our <a href="privacy.html">Privacy Policy</a>.
           </p>
         </form>
       </div>
     </section>
   </main>
 
-<div class="lightbox" id="lightbox" aria-hidden="true">
-<button class="lightbox-close" id="lightboxClose" aria-label="Close gallery">×</button>
-<button class="lightbox-nav prev" id="prevImage" aria-label="Previous image">❮</button>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Villa photo gallery" aria-hidden="true">
+<button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close gallery">×</button>
+<button class="lightbox-nav prev" id="prevImage" type="button" aria-label="Previous image">❮</button>
 <img id="lightboxImage" src="" alt="Expanded gallery image">
-<button class="lightbox-nav next" id="nextImage" aria-label="Next image">❯</button>
+<p class="lightbox-counter" id="lightboxCounter" aria-live="polite"></p>
+<button class="lightbox-nav next" id="nextImage" type="button" aria-label="Next image">❯</button>
 </div>
 
   <footer class="site-footer">
@@ -808,17 +1202,32 @@
         </p>
       </div>
       <div>
-        <h4>Explore</h4>
+        <h3 class="footer-heading">Explore</h3>
         <a href="#about">About</a>
         <a href="#gallery">Gallery</a>
         <a href="#map">Location</a>
+        <a href="#faq">Frequently asked questions</a>
+        <a href="getting-here.html">Getting to the villa</a>
+        <a href="the-area.html">The area around the villa</a>
+        <a href="beaches-near-the-villa.html">Beaches nearby</a>
       </div>
       <div>
-        <h4>Book</h4>
+        <h3 class="footer-heading">Contact</h3>
+        <a href="tel:+306988803182">+30 698 880 3182</a>
+        <a href="mailto:olgasluxuryvilla.corfu@gmail.com">olgasluxuryvilla.corfu@gmail.com</a>
+        <p class="footer-address">Kontrakia, Corfu 49100, Greece</p>
+      </div>
+      <div>
+        <h3 class="footer-heading">Book</h3>
         <a href="#contact" data-track="booking_path" data-platform="direct" data-track-location="footer">Direct Booking</a>
         <a href="https://airbnb.com/h/corfu-luxury-villa" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="airbnb" data-track-location="footer">Airbnb</a>
         <a href="https://www.booking.com/hotel/gr/olgas-luxury-villa.en-gb.html" target="_blank" rel="noopener noreferrer" data-track="booking_path" data-platform="booking" data-track-location="footer">Booking.com</a>
+        <a href="privacy.html">Privacy Policy</a>
       </div>
+    </div>
+    <div class="container footer-legal">
+      <p>© 2026 Olga’s Luxury Villa · Corfu, Greece</p>
+      <a href="privacy.html">Privacy Policy</a>
     </div>
   </footer>
   <a href="https://wa.me/306988803182"
@@ -828,7 +1237,7 @@
   aria-label="Chat on WhatsApp"
   data-track="whatsapp_click"
   data-track-location="floating-button">
-  <img src="images/whatsapp.webp" width="28" height="28" alt="WhatsApp icon">
+  <img src="images/whatsapp.webp" width="28" height="28" alt="" loading="lazy" decoding="async">
   <span>WhatsApp</span>
   </a>
 

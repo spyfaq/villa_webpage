@@ -1,6 +1,36 @@
+// Single funnel for every analytics event on the site.
+//
+// No provider is connected right now: Google Analytics was removed because its
+// cookies need prior consent under Greek Law 3471/2006 art. 4(5), and this site
+// deliberately runs without a consent banner. Every trackEvent call below is
+// therefore a no-op, but the taxonomy is preserved so a cookieless provider can
+// be added in one place. For example, for Plausible:
+//
+//   if (typeof window.plausible === "function") {
+//     window.plausible(eventName, { props: params });
+//   }
+//
+// Anything added here must stay cookieless and must not send personal data:
+// note that generate_lead below deliberately reports only dates and guest
+// count, never the name, email or phone number.
 function trackEvent(eventName, params = {}) {
-  if (typeof window.gtag !== "function") return;
-  window.gtag("event", eventName, params);
+  if (typeof window.plausible === "function") {
+    window.plausible(eventName, { props: params });
+  }
+}
+
+// Format a Date as YYYY-MM-DD in the visitor's own timezone.
+// toISOString() converts to UTC first, which shifts the date back a day for
+// every visitor east of UTC (Greece included), so it must not be used here.
+function toLocalYmd(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function todayYmd() {
+  return toLocalYmd(new Date());
 }
 
 function getSectionId(element) {
@@ -11,20 +41,15 @@ function getSectionId(element) {
 // Track QR-code visits based on UTM parameters
 (function trackQrLanding() {
   const params = new URLSearchParams(window.location.search);
-  const source = params.get('utm_source');
-  const medium = params.get('utm_medium');
-  const campaign = params.get('utm_campaign');
+  if (params.get("utm_source") !== "qr") return;
 
-  if (typeof gtag === 'function' && source === 'qr') {
-    gtag('event', 'qr_visit', {
-      traffic_type: 'qr',
-      qr_source: source,
-      qr_medium: medium || '',
-      qr_campaign: campaign || '',
-      page_location: window.location.href,
-      page_path: window.location.pathname
-    });
-  }
+  trackEvent("qr_visit", {
+    traffic_type: "qr",
+    qr_source: "qr",
+    qr_medium: params.get("utm_medium") || "",
+    qr_campaign: params.get("utm_campaign") || "",
+    page_path: window.location.pathname
+  });
 })();
 
 function sanitizeText(value) {
@@ -40,8 +65,15 @@ const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
 
 if (navToggle && navMenu) {
+  const setNavState = (isOpen) => {
+    navMenu.classList.toggle("show", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  };
+
   navToggle.addEventListener("click", () => {
-    const isOpen = navMenu.classList.toggle("show");
+    const isOpen = !navMenu.classList.contains("show");
+    setNavState(isOpen);
     trackEvent("menu_toggle", {
       menu_id: "primary_navigation",
       menu_state: isOpen ? "open" : "close"
@@ -49,9 +81,21 @@ if (navToggle && navMenu) {
   });
 
   navMenu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navMenu.classList.remove("show");
-    });
+    link.addEventListener("click", () => setNavState(false));
+  });
+
+  // Close on Escape and on clicks outside the menu
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && navMenu.classList.contains("show")) {
+      setNavState(false);
+      navToggle.focus();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!navMenu.classList.contains("show")) return;
+    if (navMenu.contains(event.target) || navToggle.contains(event.target)) return;
+    setNavState(false);
   });
 }
 
@@ -63,19 +107,44 @@ const lightboxClose = document.getElementById("lightboxClose");
 const prevBtn = document.getElementById("prevImage");
 const nextBtn = document.getElementById("nextImage");
 const showAllBtn = document.getElementById("showAllPhotos");
+const lightboxCounter = document.getElementById("lightboxCounter");
 
 const galleryPhotos = Array.from(document.querySelectorAll(".gallery-item"));
 let currentIndex = 0;
+let lastFocusedBeforeLightbox = null;
+
+// Each entry in galleryPhotos is the <button> wrapping a thumbnail. The inner
+// <img> carries a srcset, so its .src resolves to whichever candidate the
+// browser picked; the lightbox always wants the large tier from data-full.
+function fullSizeSrc(photo) {
+  return photo.dataset.full || photo.querySelector("img")?.getAttribute("src") || "";
+}
+
+function photoAlt(photo) {
+  return photo.querySelector("img")?.alt || "Villa photo";
+}
+
+// With 30 photographs there is no sense of position without a counter.
+function updateLightboxCounter() {
+  if (!lightboxCounter) return;
+  lightboxCounter.textContent = `${currentIndex + 1} / ${galleryPhotos.length}`;
+}
 
 function openLightbox(index) {
   currentIndex = index;
-  lightboxImage.src = galleryPhotos[currentIndex].src;
-  lightboxImage.alt = galleryPhotos[currentIndex].alt || "Villa photo";
+  lastFocusedBeforeLightbox = document.activeElement;
+  lightboxImage.src = fullSizeSrc(galleryPhotos[currentIndex]);
+  lightboxImage.alt = photoAlt(galleryPhotos[currentIndex]);
   lightbox.classList.add("show");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
+  // The sticky booking bar and WhatsApp float are fixed at a lower stacking
+  // level than the dialog; hide them so nothing foreign floats over the modal.
+  document.body.classList.add("lightbox-open");
+  updateLightboxCounter();
+  if (lightboxClose) lightboxClose.focus();
 
-  const imageName = galleryPhotos[currentIndex].getAttribute("src").split("/").pop();
+  const imageName = fullSizeSrc(galleryPhotos[currentIndex]).split("/").pop();
   trackEvent("select_content", {
     content_type: "gallery_image",
     content_id: imageName,
@@ -87,10 +156,11 @@ function showImage(index) {
   if (index < 0) index = galleryPhotos.length - 1;
   if (index >= galleryPhotos.length) index = 0;
   currentIndex = index;
-  lightboxImage.src = galleryPhotos[currentIndex].src;
-  lightboxImage.alt = galleryPhotos[currentIndex].alt || "Villa photo";
+  lightboxImage.src = fullSizeSrc(galleryPhotos[currentIndex]);
+  lightboxImage.alt = photoAlt(galleryPhotos[currentIndex]);
+  updateLightboxCounter();
 
-  const imageName = galleryPhotos[currentIndex].getAttribute("src").split("/").pop();
+  const imageName = fullSizeSrc(galleryPhotos[currentIndex]).split("/").pop();
   trackEvent("gallery_navigation", {
     image_name: imageName,
     gallery_position: currentIndex + 1
@@ -102,6 +172,11 @@ function closeLightbox() {
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImage.src = "";
   document.body.style.overflow = "";
+  document.body.classList.remove("lightbox-open");
+  if (lastFocusedBeforeLightbox instanceof HTMLElement) {
+    lastFocusedBeforeLightbox.focus();
+    lastFocusedBeforeLightbox = null;
+  }
 }
 
 galleryPhotos.forEach((photo, index) => {
@@ -139,12 +214,54 @@ if (lightbox) {
 }
 
 document.addEventListener("keydown", (event) => {
-  if (!lightbox.classList.contains("show")) return;
+  if (!lightbox || !lightbox.classList.contains("show")) return;
 
   if (event.key === "ArrowRight") showImage(currentIndex + 1);
   if (event.key === "ArrowLeft") showImage(currentIndex - 1);
   if (event.key === "Escape") closeLightbox();
 });
+
+// Swiping is the expected gesture on a phone gallery.
+if (lightbox) {
+  let touchStartX = null;
+  let touchStartY = null;
+
+  lightbox.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }, { passive: true });
+
+  lightbox.addEventListener("touchend", (event) => {
+    if (touchStartX === null) return;
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    touchStartX = null;
+    touchStartY = null;
+    // Horizontal intent only, so a vertical scroll never flips the photo
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return;
+    showImage(currentIndex + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+}
+
+// Google Maps is embedded only after the visitor asks for it, so that no
+// consent-bearing third party loads on first paint.
+const mapCard = document.getElementById("mapCard");
+const loadMapButton = document.getElementById("loadMapButton");
+
+if (mapCard && loadMapButton) {
+  loadMapButton.addEventListener("click", () => {
+    const iframe = document.createElement("iframe");
+    iframe.src = mapCard.dataset.mapSrc;
+    iframe.title = "Map showing the location of Olga’s Luxury Villa in Corfu";
+    iframe.loading = "lazy";
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = "no-referrer-when-downgrade";
+    mapCard.replaceChildren(iframe);
+    mapCard.classList.add("is-loaded");
+  });
+}
 
 const trackedSections = new Set();
 const sectionsToTrack = document.querySelectorAll("section[id]");
@@ -226,6 +343,48 @@ trackedClicks.forEach((element) => {
   });
 });
 
+const formStatus = document.getElementById("formMessage");
+
+function setFormStatus(message, type) {
+  if (!formStatus) return;
+  formStatus.textContent = message;
+  formStatus.classList.remove("form-status--success", "form-status--error");
+  if (type) formStatus.classList.add(`form-status--${type}`);
+  formStatus.hidden = !message;
+  if (!message) return;
+
+  // Deliberately not a modal. The message appears in place, next to the form
+  // the visitor just filled in, and is only scrolled to if it happens to be
+  // off-screen. On an error, focus moves to it so keyboard and screen-reader
+  // users are taken straight to the problem instead of hunting for it.
+  const box = formStatus.getBoundingClientRect();
+  if (box.top < 96 || box.bottom > window.innerHeight) {
+    formStatus.scrollIntoView({ block: "center" });
+  }
+  if (type === "error") {
+    // preventScroll, or focus() would scroll again and fight the line above
+    formStatus.focus({ preventScroll: true });
+  }
+}
+
+function clearFormStatus() {
+  setFormStatus("", null);
+}
+
+// Cheap bot filter that costs no third-party request: a real person cannot fill
+// five required fields in under a few seconds, so anything faster is scripted.
+// This only catches bots that run our JavaScript; the _gotcha honeypot field is
+// checked by Formspree server-side, and neither stops a bot posting straight to
+// the endpoint. That is the accepted limit of not loading a captcha.
+const MIN_FILL_MS = 3000;
+const formLoadedAt = Date.now();
+
+function looksAutomated() {
+  if (Date.now() - formLoadedAt < MIN_FILL_MS) return true;
+  const honeypot = bookingForm?.querySelector('[name="_gotcha"]');
+  return Boolean(honeypot && honeypot.value);
+}
+
 const formFields = bookingForm ? bookingForm.querySelectorAll("input, textarea, select") : [];
 let bookingFormStarted = false;
 
@@ -249,12 +408,21 @@ if (bookingForm) {
     const guests = bookingForm.querySelector('[name="guests"]')?.value || "";
 
     const submitBtn = bookingForm.querySelector('button[type="submit"]');
-    const formMessage = document.getElementById("formMessage");
 
     if (checkIn && checkOut && checkOut <= checkIn) {
-      alert("Check-out date must be after check-in date.");
+      setFormStatus("Check-out date must be after check-in date.", "error");
       return;
     }
+
+    if (looksAutomated()) {
+      setFormStatus(
+        "That was submitted a little too quickly for us to accept. Please take a moment and send it again.",
+        "error"
+      );
+      return;
+    }
+
+    clearFormStatus();
 
     trackEvent("generate_lead", {
       currency: "EUR",
@@ -284,21 +452,25 @@ if (bookingForm) {
         bookingForm.reset();
 
         if (checkOutField) {
-          checkOutField.min = checkInField?.min || new Date().toISOString().split("T")[0];
+          checkOutField.min = checkInField?.min || todayYmd();
         }
 
         document.dispatchEvent(new CustomEvent("booking-form-reset-calendar"));
 
-        if (formMessage) {
-          formMessage.style.display = "block";
-        }
+        setFormStatus(
+          "Thank you! Your request has been sent successfully. We will contact you soon.",
+          "success"
+        );
 
         if (submitBtn) {
           submitBtn.innerText = "Request Sent ✓";
         }
 
       } else {
-        alert("Something went wrong. Please try again.");
+        setFormStatus(
+          "Something went wrong sending your request. Please try again, or message us on WhatsApp.",
+          "error"
+        );
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerText = "Send Request";
@@ -306,7 +478,10 @@ if (bookingForm) {
       }
 
     } catch (error) {
-      alert("Network error. Please try again.");
+      setFormStatus(
+        "Network error — your request was not sent. Please try again, or message us on WhatsApp.",
+        "error"
+      );
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerText = "Send Request";
@@ -319,7 +494,7 @@ const checkInField = bookingForm?.querySelector('[name="check_in"]');
 const checkOutField = bookingForm?.querySelector('[name="check_out"]');
 
 if (checkInField) {
-  const today = new Date().toISOString().split("T")[0];
+  const today = todayYmd();
   checkInField.min = today;
 
   checkInField.addEventListener("change", () => {
@@ -354,14 +529,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Scroll to the form itself, not the section: the section starts at the
+  // calendar, so scrolling there showed the visitor the calendar again right
+  // after telling them to "complete your enquiry using the form".
   function scrollToBookingForm() {
-    if (bookingSection) {
-      bookingSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const target = document.querySelector(".booking-form") || bookingSection;
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    const firstEmpty = Array.from(
+      target.querySelectorAll('input[name="name"], input[name="email"]')
+    ).find((field) => !field.value);
+    if (firstEmpty) firstEmpty.focus({ preventScroll: true });
   }
 
   function toYmd(date) {
-    return date.toISOString().split("T")[0];
+    return toLocalYmd(date);
   }
 
   function rangesOverlap(startA, endA, startB, endB) {
@@ -506,7 +688,7 @@ document.addEventListener("booking-form-reset-calendar", () => {
     initialView: "dayGridMonth",
     firstDay: 1,
     height: "auto",
-    fixedWeekCount: true,
+    fixedWeekCount: false,
     showNonCurrentDates: false,
     dayMaxEvents: false,
     headerToolbar: {
@@ -518,7 +700,7 @@ document.addEventListener("booking-form-reset-calendar", () => {
     displayEventTime: false,
 
     validRange: {
-      start: new Date().toISOString().split("T")[0]
+      start: todayYmd()
     },
 
     dateClick: function (info) {
@@ -653,20 +835,18 @@ document.addEventListener("booking-form-reset-calendar", () => {
     });
   }
 
-  window.addEventListener("focus", () => {
+  function refreshAvailability() {
     calendar.refetchEvents();
     setTimeout(revalidateCurrentSelection, 150);
-  });
+  }
 
   document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) {
-      calendar.refetchEvents();
-      setTimeout(revalidateCurrentSelection, 150);
-    }
+    if (document.hidden) return;
+    refreshAvailability();
   });
 
-  setInterval(() => {
-    calendar.refetchEvents();
-    setTimeout(revalidateCurrentSelection, 150);
-  }, 300000);
+  // visibilitychange alone misses the page being left open and visible, so keep
+  // a slow poll as a backstop. availability.json is regenerated at most a couple
+  // of times a day, so 15 minutes is far more often than it can change.
+  setInterval(refreshAvailability, 900000);
 });
