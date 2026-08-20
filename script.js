@@ -399,6 +399,13 @@ formFields.forEach((field) => {
   }, { once: true });
 });
 
+// Assigned by the availability calendar once its feed has loaded. The form can
+// be completed without ever touching the calendar — by typing into the date
+// inputs or using the browser's own date picker — so the submit handler has to
+// repeat the same blocked-date test the calendar performs. Without it a stay
+// overlapping booked nights can be submitted and silently accepted.
+let stayOverlapsBlockedDates = null;
+
 if (bookingForm) {
   bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -411,6 +418,14 @@ if (bookingForm) {
 
     if (checkIn && checkOut && checkOut <= checkIn) {
       setFormStatus("Check-out date must be after check-in date.", "error");
+      return;
+    }
+
+    if (stayOverlapsBlockedDates && stayOverlapsBlockedDates(checkIn, checkOut)) {
+      setFormStatus(
+        "Those dates include nights that are already booked. Please choose different dates — the calendar shows which nights are free.",
+        "error"
+      );
       return;
     }
 
@@ -814,6 +829,19 @@ document.addEventListener("booking-form-reset-calendar", () => {
   });
 
   calendar.render();
+
+  // Let the enquiry form reject stays that overlap booked nights. If the feed
+  // failed to load there are no blocked events, so this returns false and the
+  // form still submits — the host confirms availability by hand either way.
+  stayOverlapsBlockedDates = (checkIn, checkOut) => {
+    if (!checkIn || !checkOut) return false;
+    return selectionHitsBlockedDates(
+      new Date(`${checkIn}T00:00:00`),
+      new Date(`${checkOut}T00:00:00`),
+      calendar
+    );
+  };
+
   syncCalendarFromForm();
   if (checkInField) {
     checkInField.addEventListener("change", () => {
